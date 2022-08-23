@@ -2,22 +2,30 @@
 import './App.css';
 // import Button from 'antd/lib/button';
 import "antd/dist/antd.min.css";
-import { header } from './components/layouts/header';
+import Nav from'./components/layouts/nav'
+import Layout from './components/layouts/layout'
+import Login from './components/pages/login'
+// import { Layout } from 'antd';
+// const { Header, Footer, Sider, Content } = Layout;
 
 function App() {
+  // document.body.style.backgroundColor = "green";
   return (
-    <div className="App">
-      {/* <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <h1 className="text-3xl font-bold underline">
-          Hello world!
-        </h1>
-      </header> */}
-      <header/>
+    <div >
+    <Layout/>
     </div>
+    // <Layout/>
+    // <div className="App">
+      // <Layout>
+      //   <Header>Header</Header>
+      //   <Layout>
+      //     <Sider>Sider</Sider>
+      //     <Content>Content</Content>
+      //   </Layout>
+      //   <Footer>Footer</Footer>
+      // </Layout>
+
+    // </div>
   );
 }
 
