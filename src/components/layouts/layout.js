@@ -2,9 +2,9 @@
 import Nav from "./nav";
 import Sider from "./sider";
 import Footer from "./footer";
-import Content from "./content";
+import Content from "../content/content1";
 
-import { Layout, Breadcrumb } from 'antd';
+// import { Layout, Breadcrumb } from 'antd';
 
 function layout() {
   return (
