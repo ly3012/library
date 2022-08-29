@@ -1,5 +1,3 @@
-// import "antd/dist/antd.min.css";
-// import { Layout } from 'antd';
 import React, { useState } from "react";
 import './style/sider.css'
 import { FaChevronCircleLeft } from "react-icons/fa";
@@ -11,23 +9,16 @@ import { RiAdminLine } from "react-icons/ri";
 import { GiNotebook } from "react-icons/gi";
 import { NavLink } from 'react-router-dom';
 
-
-
-
-
-// const { Header, Footer, Sider, Content } = Layout;
-
 const Sider = () => {
 
    const [open, setOpen] = useState(true);
 
-  
    return (
 
-      <div className="flex h-auto">
+      <div className="  min-h-fit">
          <div
-            className={` ${open ? "w-72" : "w-20 "
-               }   h-screen p-5  pt-8 relative duration-300`}
+            className={` ${open ? "w-72" : "w-20 "} 
+                  min-h-fit  h-screen p-5  pt-8 relative duration-300 flex flex-col`}
                style={{backgroundImage: `url("https://3.imimg.com/data3/FM/UD/MY-3597718/colored-handmade-paper-500x500.jpg")`}}
          >
             <div
@@ -44,13 +35,13 @@ const Sider = () => {
                      }`}
                />
                <h1
-                  className={`text-white origin-left font-medium text-xl duration-200 ${!open && "scale-0"
+                  className={`md:hidden sm:hidden text-white origin-left font-medium text-xl duration-200 ${!open && "scale-0"
                      }`}
                >
                   Designer
                </h1>
             </div>
-            <ul className="pt-6">
+            <ul className="pt-6 min-h-fit h-screen">
                <NavLink activeClassName="active" to ="/" exact
                className={`flex  rounded-md p-1 cursor-pointer hover:bg-light-white text-gray-400   hover:text-gray-100 text-sm items-center gap-x-4 `}
                >
@@ -64,7 +55,7 @@ const Sider = () => {
                className={`flex  rounded-md p-1 cursor-pointer hover:bg-light-white text-gray-400   hover:text-gray-100 text-sm items-center gap-x-4 `}
                >
                   <BiBook className={` h-10 text-2xl `} />
-                  <span className={`${!open && "hidden"} origin-left duration-200 text-lg`}>
+                  <span className={`${!open && "hidden"} origin-left duration-200 text-lg `}>
                      Quản lý sách
                   </span>
                   {/* </NavLink> */}

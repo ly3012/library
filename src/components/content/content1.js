@@ -11,6 +11,8 @@ const Content1 = () => {
 
     const { data: dataCovid, isLoading, isError }
         = useFetch(`https://api.covid19api.com/country/vietnam?from=${priorDate}&to=${today}`, true)
+    
+       
 
     return (
         <div className=" h-screen flex-1 p-7  ">

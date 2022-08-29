@@ -21,7 +21,7 @@ const Nav = () => {
                 <img src={logoPage} className="mr-3 h-6 sm:h-9" alt="Flowbite Logo" />
                 <span className="self-center text-xl font-semibold whitespace-nowrap dark:text-white">Library</span>
             </a> 
-            <ul className='dark dropdown show  flex-col flex items-center relative mr-6'>
+            <div className='dark show  flex-col flex items-center relative mr-6'>
                 <a href="/#" className="flex-col flex items-center z-50 text-2xl dark:text-white" onMouseMove= {() => setOpen(true)} onMouseOut= {() => setOpen(false)}>
                     <FaUser />
                     {/* <p className="mr-3 h-6 sm:h-9"><IconName icon="fa-light fa-user" /></p> */}
@@ -42,7 +42,7 @@ const Nav = () => {
                         </li>
                     </div>
                 </div>
-            </ul>
+            </div>
         </div>
 
     )

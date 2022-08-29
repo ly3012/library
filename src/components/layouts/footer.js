@@ -1,6 +1,3 @@
-// import "antd/dist/antd.min.css";
-// import { Layout } from 'antd';
-// const { Header, Footer, Sider, Content } = Layout;
 import React, { useState } from "react";
 
 const Footer = () => {

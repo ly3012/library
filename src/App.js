@@ -1,5 +1,5 @@
 import './App.css';
-import "antd/dist/antd.min.css";
+// import "antd/dist/antd.min.css";
 // import Layout from './components/layouts/layout'
 import Nav from './components/layouts/nav';
 import Content1 from './components/content/content1';
@@ -10,6 +10,7 @@ import Dashboard from './components/content/dashboard'
 import Footer from './components/layouts/footer';
 import Admin from './components/content/admin';
 import CallCard from './components/content/callCard'
+import AddBook from './components/form/addBook';
 
 import {
   BrowserRouter as Router,
@@ -17,33 +18,37 @@ import {
   Route,
   Link
 } from "react-router-dom";
+import LoginForm from './components/form/login';
 
 function App() {
   return (
     <Router>
       <div className='App flex flex-col'>
         <Nav />
-        <div className={`flex `}>
+        <div className={`flex flex-row`}>
           <Sider />
           <Switch>
             <Route path="/" exact>
               <Dashboard/>
             </Route>
-            <Route path="/book" >
+            <Route path="/book" exact>
               <Book />
             </Route>
-            <Route path="/member">
+            <Route path="/member" exact>
               <Member />
             </Route>
-            <Route path="/callCard">
+            <Route path="/callCard" exact>
               <CallCard/>
             </Route>
-            <Route path="/admin">
+            <Route path="/admin" exact>
               <Admin />
+            </Route>
+            <Route path="/book/add" exact>
+              <AddBook/>
             </Route>
           </Switch>
         </div>
-        <Footer/>
+        {/* <Footer/> */}
       </div>
     </Router >
 
