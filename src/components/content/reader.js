@@ -1,20 +1,20 @@
 import { useEffect, useState } from 'react';
-import bookService from '../service/bookService';
+import readerService from '../service/readerService';
 import React from 'react';
 import SearchComponent from '../layouts/searchComponent';
-import AddBook from '../form/addBook';
-import EditBook from '../form/editBook';
+import AddReader from '../form/addReader';
+import EditReader from '../form/editReader';
 import moment from 'moment';
 
+const Reader = () => {
 
-const BookList = () => {
-
-    const [dataBook, setDataBook] = useState([]);
+    const [dataReader, setDataReader] = useState([]);
 
     const init = () => {
-        bookService.getBook()
+        readerService.getReader()
             .then(response => {
-                setDataBook(response.data);
+                setDataReader(response.data); 
+                console.log("data reader:", dataReader);
             })
             .catch(error => {
                 console.log('Something went wrong', error);
@@ -25,7 +25,7 @@ const BookList = () => {
     }, []);
 
     const handleDelete = (id) => {
-        bookService.deleteBook(id)
+        readerService.deleteReader(id)
             .then(response => {
                 init();
 
@@ -38,38 +38,40 @@ const BookList = () => {
     return (
         <div className=" h-screen flex-1 p-7  ">
             <div className='headContent flex flex-row justify-between'>
-                <AddBook />
+                <AddReader />
                 <SearchComponent />
             </div>
 
-            <table className=''>
+            <table className='mt-3'>
                 <thead>
                     <tr>
-                        <th>Id Book</th>
+                        <th>Id Reader</th>
                         <th>Name</th>
-                        <th>Author</th>
-                        <th>PageNumber</th>
-                        <th>Release</th>
-                        <th>Amount</th>
+                        <th>Add</th>
+                        <th>PhoneNumber</th>
+                        <th>Email</th>
+                        <th>Status</th>
                         <th>Update At</th>
                         <th></th>
                     </tr>
                 </thead>
                 <tbody>
-                    {dataBook.map((item) => {
+                    {dataReader.map((item) => {
                         return (
-                            < tr key={item.idBook}>
+                            < tr key={item.idReader}>
 
-                                <td>{item.idBook}</td>
-                                <td>{item.name}</td>
-                                <td>{item.author}</td>
-                                <td>{item.numberOfPages}</td>
-                                <td>{item.released}</td>
-                                <td>{item.amount}</td>
+                                <td>{item.idReader}</td>
+                                <td>{item.fullName}</td>
+                                <td>{item.address}</td>
+                                <td>{item.phoneNumber}</td>
+                                <td>{item.email}</td>
+                                <td>{item.status}</td>
+                                {/* <td>{item.updatedAt}</td> */}
                                 <td>{moment(item.updatedAt).format("DD/MM/YYYY, hh:mm:ss")}</td>
+
                                 <td>
-                                    <EditBook
-                                        id={item.idBook} />
+                                    <EditReader
+                                        id={item.idReader} />
 
                                     <button
                                         className= {`text-white active:bg-red-600 
@@ -78,7 +80,7 @@ const BookList = () => {
                                         inline-flex items-center bg-red-500  hover:bg-red-600 
                                         border-b-4 border-red-700 hover:border-red-500  min-w-fit`}
                                         onClick={() => {if(window.confirm('Delete the item?'))
-                                            handleDelete(item.idBook);
+                                            handleDelete(item.idReader);
                                         }}
                                     >
                                         Delete
@@ -94,4 +96,4 @@ const BookList = () => {
     );
 }
 
-export default BookList;
+export default Reader;

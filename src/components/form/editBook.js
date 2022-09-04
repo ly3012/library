@@ -1,35 +1,36 @@
 import React from 'react';
-import { FaBook } from 'react-icons/fa'
 import { useState } from 'react';
 import bookService from '../service/bookService';
-import { createBrowserHistory } from 'history'
-// import createHistory from 'history/createBrowserHistory'
+import createHistory from 'history/createBrowserHistory'
 
-const AddBook = () => {
+const EditBook = (props) => {
+  const history = createHistory();
   const [showModal, setShowModal] = React.useState(false);
   const [showAlert, setShowAlert] = React.useState(false);
+  const url = "http://localhost:8080/admin/books";
+
   const [book, setBook] = useState({
-    name: '',
+    idBook: '',
+    fullName: '',
     author: '',
     numberOfPages: null,
     released: null,
     amount: null
   });
-
+  
   const handleEventOnChange = (event) => {
     const newData = { ...book };
     newData[event.target.id] = event.target.value;
     setBook(newData);
+    
   }
 
-  const history = createBrowserHistory();
   const saveBook = (event) => {
-    bookService.createBook(book)
+    bookService.updateBook(book)
       .then(response => {
-        console.log("employee added successfully", response.data);
         setShowAlert(true);
+        setBook([])
         history.go(0)
-        
       })
       .catch(error => {
         console.log('something went wroing', error);
@@ -37,22 +38,35 @@ const AddBook = () => {
 
 
   }
-  
+
 
   return (
     <>
       <button
-        className={` text-white active:bg-blue-600 font-bold  
-                    text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none 
-                    focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150
+        className={` text-white active:bg-blue-600 
+                    text-sm py-1 px-3 m-1 rounded shadow hover:shadow-lg outline-none 
+                    focus:outline-none  ease-linear transition-all duration-150
                     inline-flex items-center bg-blue-500  hover:bg-blue-600 
                     border-b-4 border-blue-700 hover:border-blue-500  min-w-fit
         `}
         type="button"
-        onClick={() => setShowModal(true)}
+        onClick={() =>
+        (
+          setShowModal(true),
+          bookService.getBookById(props.id)
+            .then(response => {
+              console.log('Printing book data', response.data);
+              setBook(response.data);
+            })
+            .catch(error => {
+              console.log('Something went wrong', error);
+            }))
+          // console.log("get book by id",bookService.getBookById(props.id)))
+        }
+
       >
-        <FaBook />
-        <div className='m-0 pl-1'>Add</div>
+        
+        <div className='m-0 pl-1'>Edit</div>
       </button>
       {showModal ? (
         <>
@@ -65,7 +79,7 @@ const AddBook = () => {
                 {/*header*/}
                 <div className="flex items-start justify-between p-5 border-b border-solid border-slate-200 rounded-t">
                   <h3 className="text-3xl font-medium uppercase text-green-700 text-center pb-5">
-                    Thêm một cuốn sách
+                    Sửa thông tin sách
                   </h3>
                   <button
                     className="p-1 px-2 bg-slate-100 ml-auto text-center border-0 text-gray-500  float-right text-xl leading-none font-semibold outline-none focus:outline-none"
@@ -79,11 +93,21 @@ const AddBook = () => {
                   <form className=' p-5' onSubmit={(event) => saveBook(event)}>
                     <div>
                       <div className="mb-6 flex flex-row sm:flex-wrap md:flex-wrap">
-                        <label htmlFor="name" className="min-w-10 text-left  ml-0 pr-2 py-1 justify-self-start">Tên sách:</label>
+                        <label htmlFor="fullName" className="min-w-10 text-left  ml-0 pr-2 py-1 justify-self-start">Id book:</label>
                         <input
                           type="text"
-                          id="name"
-                          value={book.name}
+                          id="idBook"
+                          value={book.idBook}
+                          //   onChange={(event) => handleEventOnChange(event)}
+                          className="md:min-w-20 flex-1 py-1 bg-gray-50 border border-gray-300" required=""
+                        />
+                      </div>
+                      <div className="mb-6 flex flex-row sm:flex-wrap md:flex-wrap">
+                        <label htmlFor="fullName" className="min-w-10 text-left  ml-0 pr-2 py-1 justify-self-start">Tên sách:</label>
+                        <input
+                          type="text"
+                          id="fullName"
+                          value={book.fullName}
                           onChange={(event) => handleEventOnChange(event)}
                           className="md:min-w-20 flex-1 py-1 bg-gray-50 border border-gray-300" required=""
                         />
@@ -135,7 +159,7 @@ const AddBook = () => {
                   </form>
                 </div>
                 {/*footer*/}
-                <div className="flex items-center justify-end p-6 border-t border-solid border-slate-200 rounded-b">
+                <div className="relative flex items-center justify-end p-6 border-t border-solid border-slate-200 rounded-b">
                   <button
                     className="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                     type="button"
@@ -147,6 +171,7 @@ const AddBook = () => {
                     className="bg-emerald-600 text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                     type="submit"
                     onClick={() => saveBook()}
+
                   >
                     Save Changes
                   </button>
@@ -190,4 +215,4 @@ const AddBook = () => {
   );
 }
 
-export default AddBook;
+export default EditBook;

@@ -4,13 +4,14 @@ import './App.css';
 import Nav from './components/layouts/nav';
 import Content1 from './components/content/content1';
 import Sider from './components/layouts/sider';
-import Book from './components/content/book';
-import Member from './components/content/member';
+import BookList from './components/content/book';
+import Reader from './components/content/reader';
 import Dashboard from './components/content/dashboard'
 import Footer from './components/layouts/footer';
 import Admin from './components/content/admin';
 import CallCard from './components/content/callCard'
 import AddBook from './components/form/addBook';
+import Login from './components/form/login'
 
 import {
   BrowserRouter as Router,
@@ -18,10 +19,10 @@ import {
   Route,
   Link
 } from "react-router-dom";
-import LoginForm from './components/form/login';
 
 function App() {
   return (
+    // <Login/>
     <Router>
       <div className='App flex flex-col'>
         <Nav />
@@ -32,10 +33,10 @@ function App() {
               <Dashboard/>
             </Route>
             <Route path="/book" exact>
-              <Book />
+              <BookList/>
             </Route>
-            <Route path="/member" exact>
-              <Member />
+            <Route path="/reader" exact>
+              <Reader />
             </Route>
             <Route path="/callCard" exact>
               <CallCard/>
@@ -43,9 +44,9 @@ function App() {
             <Route path="/admin" exact>
               <Admin />
             </Route>
-            <Route path="/book/add" exact>
+            {/* <Route path="/book/add" exact>
               <AddBook/>
-            </Route>
+            </Route> */}
           </Switch>
         </div>
         {/* <Footer/> */}

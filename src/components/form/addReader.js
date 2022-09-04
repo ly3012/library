@@ -1,30 +1,30 @@
 import React from 'react';
-import { FaBook } from 'react-icons/fa'
+import { FaUser } from 'react-icons/fa'
 import { useState } from 'react';
-import bookService from '../service/bookService';
-import { createBrowserHistory } from 'history'
-// import createHistory from 'history/createBrowserHistory'
+import readerService from '../service/readerService';
+import createHistory from 'history/createBrowserHistory'
 
-const AddBook = () => {
+const AddReader = () => {
   const [showModal, setShowModal] = React.useState(false);
   const [showAlert, setShowAlert] = React.useState(false);
-  const [book, setBook] = useState({
-    name: '',
-    author: '',
-    numberOfPages: null,
-    released: null,
-    amount: null
+  const [reader, setReader] = useState({
+    fullName: '',
+    phoneNumber: '',
+    email: null,
+    address: null,
   });
 
   const handleEventOnChange = (event) => {
-    const newData = { ...book };
+    const newData = { ...reader };
     newData[event.target.id] = event.target.value;
-    setBook(newData);
+    setReader(newData);
+    console.log("newData",reader);
   }
 
-  const history = createBrowserHistory();
-  const saveBook = (event) => {
-    bookService.createBook(book)
+  
+  const history = createHistory();
+  const saveReader = (event) => {
+    readerService.createReader(reader)
       .then(response => {
         console.log("employee added successfully", response.data);
         setShowAlert(true);
@@ -51,7 +51,7 @@ const AddBook = () => {
         type="button"
         onClick={() => setShowModal(true)}
       >
-        <FaBook />
+        <FaUser/>
         <div className='m-0 pl-1'>Add</div>
       </button>
       {showModal ? (
@@ -65,7 +65,7 @@ const AddBook = () => {
                 {/*header*/}
                 <div className="flex items-start justify-between p-5 border-b border-solid border-slate-200 rounded-t">
                   <h3 className="text-3xl font-medium uppercase text-green-700 text-center pb-5">
-                    Thêm một cuốn sách
+                    Thêm bạn đọc
                   </h3>
                   <button
                     className="p-1 px-2 bg-slate-100 ml-auto text-center border-0 text-gray-500  float-right text-xl leading-none font-semibold outline-none focus:outline-none"
@@ -76,55 +76,45 @@ const AddBook = () => {
                 </div>
                 {/*body*/}
                 <div className="relative p-6 flex-auto">
-                  <form className=' p-5' onSubmit={(event) => saveBook(event)}>
+                  <form className=' p-5' onSubmit={(event) => saveReader(event)}>
                     <div>
                       <div className="mb-6 flex flex-row sm:flex-wrap md:flex-wrap">
-                        <label htmlFor="name" className="min-w-10 text-left  ml-0 pr-2 py-1 justify-self-start">Tên sách:</label>
+                        <label htmlFor="fullName" className="min-w-10 text-left  ml-0 pr-2 py-1 justify-self-start">Tên bạn đọc:</label>
                         <input
                           type="text"
-                          id="name"
-                          value={book.name}
+                          id="fullName"
+                          value={reader.fullName}
                           onChange={(event) => handleEventOnChange(event)}
                           className="md:min-w-20 flex-1 py-1 bg-gray-50 border border-gray-300" required=""
                         />
                       </div>
                       <div className="mb-6 flex flex-row sm:flex-wrap md:flex-wrap">
-                        <label htmlFor="author" className="min-w-10 text-left  ml-0 pr-2 py-1 justify-self-start">Tác giả:</label>
+                        <label htmlFor="phoneNumber" className="min-w-10 text-left  ml-0 pr-2 py-1 justify-self-start">Số điện thoại:</label>
                         <input
                           type="text"
-                          id="author"
-                          value={book.author}
+                          id="phoneNumber"
+                          value={reader.phoneNumber}
                           onChange={(event) => handleEventOnChange(event)}
                           className="md:min-w-20 flex-1 py-1 bg-gray-50 border border-gray-300" required=""
                         />
                       </div>
                       <div className="mb-6 flex flex-row sm:flex-wrap md:flex-wrap">
 
-                        <label htmlFor="numberOfPages" className="min-w-10 text-left  ml-0 pr-2 py-1 justify-self-start">Số trang:</label>
+                        <label htmlFor="email" className="min-w-10 text-left  ml-0 pr-2 py-1 justify-self-start">Email:</label>
                         <input
-                          type="text"
-                          id="numberOfPages"
-                          value={book.numberOfPages}
+                          type="email"
+                          id="email"
+                          value={reader.email}
                           onChange={(event) => handleEventOnChange(event)}
                           className="md:min-w-20 flex-1 py-1 bg-gray-50 border border-gray-300" required=""
                         />
                       </div>
                       <div className="mb-6 flex flex-row sm:flex-wrap md:flex-wrap">
-                        <label htmlFor="released" className="min-w-10 text-left  ml-0 pr-2 py-1 justify-self-start">Năm xuất bản:</label>
+                        <label htmlFor="address" className="min-w-10 text-left  ml-0 pr-2 py-1 justify-self-start">Địa chỉ:</label>
                         <input
                           type="text"
-                          id="released"
-                          value={book.released}
-                          onChange={(event) => handleEventOnChange(event)}
-                          className="md:min-w-20 flex-1 py-1 bg-gray-50 border border-gray-300" required=""
-                        />
-                      </div>
-                      <div className="mb-6 flex flex-row sm:flex-wrap md:flex-wrap">
-                        <label htmlFor="amount" className="min-w-10 text-left  ml-0 pr-2 py-1 justify-self-start">Số lượng:</label>
-                        <input
-                          type="text"
-                          id="amount"
-                          value={book.amount}
+                          id="address"
+                          value={reader.address}
                           onChange={(event) => handleEventOnChange(event)}
                           className="md:min-w-20 flex-1 py-1 bg-gray-50 border border-gray-300" required=""
                         />
@@ -146,7 +136,7 @@ const AddBook = () => {
                   <button
                     className="bg-emerald-600 text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                     type="submit"
-                    onClick={() => saveBook()}
+                    onClick={() => saveReader()}
                   >
                     Save Changes
                   </button>
@@ -164,7 +154,7 @@ const AddBook = () => {
                         Whenever you need to, be sure to use margin utilities to keep things nice and tidy.
                       </p>
                       <button
-                        to="/book"
+                        to="/reader"
                         class="font-bold btn border-spacing-2 bg-green-700
                         text-white active:bg-green-800 
                         text-sm py-2 px-4 m-1 rounded shadow hover:shadow-lg outline-none 
@@ -190,4 +180,4 @@ const AddBook = () => {
   );
 }
 
-export default AddBook;
+export default AddReader;

@@ -60,7 +60,7 @@ const Sider = () => {
                   </span>
                   {/* </NavLink> */}
                </NavLink>
-               <NavLink activeClassName="active" to ="/member"
+               <NavLink activeClassName="active" to ="/reader"
                className={`flex  rounded-md p-1 cursor-pointer hover:bg-light-white text-gray-400   hover:text-gray-100 text-sm items-center gap-x-4 `}
                >
                   <RiContactsBook2Line className={` h-10 text-2xl `} />
