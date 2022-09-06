@@ -24,4 +24,8 @@ const BOOK_API_BASE_URL = "http://localhost:8080/admin/readers";
         return axios.delete(`${BOOK_API_BASE_URL}/${readerID}`);
     }
 
-export default {getReader, getReaderById, createReader, deleteReader, updateReader}
+    const findByCriteria =(criteria)=>{
+        return axios.get(`${BOOK_API_BASE_URL}/search?query=${criteria}`);
+    }
+
+export default {getReader, getReaderById, createReader, deleteReader, updateReader, findByCriteria}

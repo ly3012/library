@@ -7,10 +7,8 @@ const SearchComponent = (props) => {
     
     const handleEventOnChange =(event)=>{
         setKeyWord(event.target.value)
-        console.log(keyWord);
     }
 
-    // const {handleChangeFilterBook} = props.handleChangeFilterBook;
 
     return (
         <div className="flex items-center">
@@ -24,7 +22,8 @@ const SearchComponent = (props) => {
 
                 />
                 <button className="px-4 text-white bg-yellow-700 border-l rounded hover:bg-yellow-800"
-                    // onClick={props.handleChangeFilterBook(keyWord)}
+                    onClick={()=>(props.handleChangeFilter(keyWord),
+                    setKeyWord(""))}
                 >
                     Search
                 </button>

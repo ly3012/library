@@ -26,8 +26,8 @@ const BOOK_API_BASE_URL = "http://localhost:8080/admin/books";
         return axios.delete(`${BOOK_API_BASE_URL}/${bookID}`);
     }
 
-    const findBookByCriteria =(bookID)=>{
-        return axios.get(`${BOOK_API_BASE_URL}/search?query=${bookID}`);
+    const findBookByCriteria =(criteria)=>{
+        return axios.get(`${BOOK_API_BASE_URL}/search?query=${criteria}`);
     }
 
     

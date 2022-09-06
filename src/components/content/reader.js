@@ -8,13 +8,26 @@ import moment from 'moment';
 
 const Reader = (props) => {
 
-    const [dataReader, setDataReader] = useState([]);
+    // const [dataRender, setDataRender] = useState([]);
+    const [dataRender, setDataRender] = useState([]);
+
+
+    const handleChangeFilter = (newFilter) => {
+        readerService.findByCriteria(newFilter)
+            .then(response => {
+                let data = (response && response.data) ? response.data : [];
+                setDataRender(data);
+            })
+            .catch(error => {
+                console.log('Something went wrong', error);
+            })
+    }
 
     const init = () => {
         readerService.getReader()
             .then(response => {
-                setDataReader(response.data); 
-                console.log("data reader:", dataReader);
+                setDataRender(response.data); 
+                console.log("data reader:", dataRender);
             })
             .catch(error => {
                 console.log('Something went wrong', error);
@@ -39,7 +52,8 @@ const Reader = (props) => {
         <div className={`${props.openSider ? "ml-72" : "ml-20 "} h-screen flex-1 p-7  `}>
             <div className='headContent flex flex-row justify-between'>
                 <AddReader />
-                <SearchComponent />
+                <SearchComponent handleChangeFilter={handleChangeFilter} />
+
             </div>
 
             <table className='mt-3'>
@@ -56,7 +70,7 @@ const Reader = (props) => {
                     </tr>
                 </thead>
                 <tbody>
-                    {dataReader.map((item) => {
+                    {dataRender.map((item) => {
                         return (
                             < tr key={item.idReader}>
 

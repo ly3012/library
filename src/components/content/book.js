@@ -12,27 +12,21 @@ const BookList = (props) => {
 
 
     const [dataBook, setDataBook] = useState([]);
-    // console.log(bookService.findBookByCriteria("kim"));
+    const [dataRender, setDataRender] = useState([]);
 
-   const [dataRender, setDataRender] = useState([]);
 
-    const handleChangeFilterBook = (newFilter)=> {
-
-            bookService.findBookByCriteria(newFilter)
-                .then(response => {
-                    console.log(response.data);
-                    setDataRender(response.data);
-                    // setDataRender(response.data);
-                    // console.log("data render",dataRender);
-                })
-                .catch(error => {
-                    console.log('Something went wrong', error);
-                })
-        
-
+    const handleChangeFilter = (newFilter) => {
+        bookService.findBookByCriteria(newFilter)
+            .then(response => {
+                let data = (response && response.data) ? response.data : [];
+                setDataRender(data);
+            })
+            .catch(error => {
+                console.log('Something went wrong', error);
+            })
     }
-    
-   
+
+
 
     const init = () => {
         bookService.getBook()
@@ -48,7 +42,7 @@ const BookList = (props) => {
     useEffect(() => {
         init();
     }, []);
-    
+
 
     const handleDelete = (id) => {
         bookService.deleteBook(id)
@@ -65,7 +59,7 @@ const BookList = (props) => {
         <div className={`${props.openSider ? "ml-72" : "ml-20 "} content flex-1 p-7  "`}>
             <div className='headContent flex flex-row justify-between mb-7'>
                 <AddBook />
-                <SearchComponent  onClick ={handleChangeFilterBook}/>
+                <SearchComponent handleChangeFilter={handleChangeFilter} />
             </div>
 
             <table className=''>
@@ -82,7 +76,7 @@ const BookList = (props) => {
                     </tr>
                 </thead>
                 <tbody>
-                    {dataRender.map((item) => {
+                    {dataRender.length>0 && dataRender.map((item) => {
                         return (
                             < tr key={item.idBook}>
 
@@ -98,14 +92,15 @@ const BookList = (props) => {
                                         id={item.idBook} />
 
                                     <button
-                                        className= {`text-white active:bg-red-600 
+                                        className={`text-white active:bg-red-600 
                                         text-sm py-1 px-3 m-1 rounded shadow hover:shadow-lg outline-none 
                                         focus:outline-none  ease-linear transition-all duration-150
                                         inline-flex items-center bg-red-500  hover:bg-red-600 
                                         border-b-4 border-red-700 hover:border-red-500  min-w-fit
                                         lg:min-w-2`}
-                                        onClick={() => {if(window.confirm('Delete the item?'))
-                                            handleDelete(item.idBook);
+                                        onClick={() => {
+                                            if (window.confirm('Delete the item?'))
+                                                handleDelete(item.idBook);
                                         }}
                                     >
                                         Delete
@@ -115,6 +110,12 @@ const BookList = (props) => {
                             </tr>
                         )
                     })}
+
+                    {dataRender.length===0 &&
+                        <tr>
+                            <td colSpan={'8'} className='text-center'>NotResult...</td>
+                        </tr>
+                    }
                 </tbody>
             </table>
         </div >
