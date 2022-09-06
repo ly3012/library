@@ -13,7 +13,7 @@ const Nav = () => {
     const [open, setOpen] = useState(false);
     return (
 
-        <div className='topnav flex flex-row justify-between py-2 bg-orange-900'  
+        <div className='topnav flex flex-row justify-between py-2 bg-orange-900 sticky top-0'  
         style={{backgroundImage: `url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTHQaY0r7xuVqLEO05ohT--a4bJLjzdjmI2DZMMdOOOG7O65_6CJEJ2u_xKUGeKa693WNM&usqp=CAU")`}}
         >
          {/* style={{backgroundImage: `url("")`}}> */}

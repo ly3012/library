@@ -12,6 +12,8 @@ import Admin from './components/content/admin';
 import CallCard from './components/content/callCard'
 import AddBook from './components/form/addBook';
 import Login from './components/form/login'
+import React, { useCallback, useState } from "react";
+
 
 import {
   BrowserRouter as Router,
@@ -21,25 +23,39 @@ import {
 } from "react-router-dom";
 
 function App() {
+  const [openSider, setOpenSider] = useState(true);
+  const updateOpenSider = (openSider) =>{
+      setOpenSider(!openSider);
+  }
+
   return (
     // <Login/>
     <Router>
-      <div className='App flex flex-col'>
+      <div className='App flex-col '>
         <Nav />
-        <div className={`flex flex-row`}>
-          <Sider />
+        <div className={`flex justify-between `}>
+          <Sider 
+            openSider={openSider}
+            updateOpenSider = {updateOpenSider}
+            />
           <Switch>
             <Route path="/" exact>
               <Dashboard/>
             </Route>
             <Route path="/book" exact>
-              <BookList/>
+              <BookList
+              openSider={openSider}
+              />
             </Route>
             <Route path="/reader" exact>
-              <Reader />
+              <Reader 
+              openSider={openSider}
+              />
             </Route>
             <Route path="/callCard" exact>
-              <CallCard/>
+              <CallCard
+              openSider={openSider}
+              />
             </Route>
             <Route path="/admin" exact>
               <Admin />

@@ -6,7 +6,7 @@ import AddReader from '../form/addReader';
 import EditReader from '../form/editReader';
 import moment from 'moment';
 
-const Reader = () => {
+const Reader = (props) => {
 
     const [dataReader, setDataReader] = useState([]);
 
@@ -36,7 +36,7 @@ const Reader = () => {
     }
 
     return (
-        <div className=" h-screen flex-1 p-7  ">
+        <div className={`${props.openSider ? "ml-72" : "ml-20 "} h-screen flex-1 p-7  `}>
             <div className='headContent flex flex-row justify-between'>
                 <AddReader />
                 <SearchComponent />
@@ -45,7 +45,7 @@ const Reader = () => {
             <table className='mt-3'>
                 <thead>
                     <tr>
-                        <th>Id Reader</th>
+                        <th>Id</th>
                         <th>Name</th>
                         <th>Add</th>
                         <th>PhoneNumber</th>

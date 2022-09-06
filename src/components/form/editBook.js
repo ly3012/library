@@ -48,6 +48,7 @@ const EditBook = (props) => {
                     focus:outline-none  ease-linear transition-all duration-150
                     inline-flex items-center bg-blue-500  hover:bg-blue-600 
                     border-b-4 border-blue-700 hover:border-blue-500  min-w-fit
+                    lg:w-16
         `}
         type="button"
         onClick={() =>

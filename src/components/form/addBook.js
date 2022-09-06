@@ -57,9 +57,9 @@ const AddBook = () => {
       {showModal ? (
         <>
           <div
-            className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none"
+            className=" max-h-fit top-0 left-0 right-0 bottom-2 justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none"
           >
-            <div className="relative w-auto my-6 mx-auto max-w-3xl">
+            <div className="relative w-auto my-3 mx-auto max-w-3xl">
               {/*content*/}
               <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
                 {/*header*/}
@@ -75,7 +75,7 @@ const AddBook = () => {
                   </button>
                 </div>
                 {/*body*/}
-                <div className="relative p-6 flex-auto">
+                <div className="relative p-5 px-3 flex-auto">
                   <form className=' p-5' onSubmit={(event) => saveBook(event)}>
                     <div>
                       <div className="mb-6 flex flex-row sm:flex-wrap md:flex-wrap">

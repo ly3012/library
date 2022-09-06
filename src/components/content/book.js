@@ -7,14 +7,39 @@ import EditBook from '../form/editBook';
 import moment from 'moment';
 
 
-const BookList = () => {
+const BookList = (props) => {
+
+
 
     const [dataBook, setDataBook] = useState([]);
+    // console.log(bookService.findBookByCriteria("kim"));
+
+   const [dataRender, setDataRender] = useState([]);
+
+    const handleChangeFilterBook = (newFilter)=> {
+
+            bookService.findBookByCriteria(newFilter)
+                .then(response => {
+                    console.log(response.data);
+                    setDataRender(response.data);
+                    // setDataRender(response.data);
+                    // console.log("data render",dataRender);
+                })
+                .catch(error => {
+                    console.log('Something went wrong', error);
+                })
+        
+
+    }
+    
+   
 
     const init = () => {
         bookService.getBook()
             .then(response => {
                 setDataBook(response.data);
+                setDataRender(response.data);
+                // console.log("data render",dataRender);
             })
             .catch(error => {
                 console.log('Something went wrong', error);
@@ -23,6 +48,7 @@ const BookList = () => {
     useEffect(() => {
         init();
     }, []);
+    
 
     const handleDelete = (id) => {
         bookService.deleteBook(id)
@@ -36,16 +62,16 @@ const BookList = () => {
     }
 
     return (
-        <div className=" h-screen flex-1 p-7  ">
-            <div className='headContent flex flex-row justify-between'>
+        <div className={`${props.openSider ? "ml-72" : "ml-20 "} content flex-1 p-7  "`}>
+            <div className='headContent flex flex-row justify-between mb-7'>
                 <AddBook />
-                <SearchComponent />
+                <SearchComponent  onClick ={handleChangeFilterBook}/>
             </div>
 
             <table className=''>
                 <thead>
                     <tr>
-                        <th>Id Book</th>
+                        <th>Id </th>
                         <th>Name</th>
                         <th>Author</th>
                         <th>PageNumber</th>
@@ -56,7 +82,7 @@ const BookList = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    {dataBook.map((item) => {
+                    {dataRender.map((item) => {
                         return (
                             < tr key={item.idBook}>
 
@@ -76,7 +102,8 @@ const BookList = () => {
                                         text-sm py-1 px-3 m-1 rounded shadow hover:shadow-lg outline-none 
                                         focus:outline-none  ease-linear transition-all duration-150
                                         inline-flex items-center bg-red-500  hover:bg-red-600 
-                                        border-b-4 border-red-700 hover:border-red-500  min-w-fit`}
+                                        border-b-4 border-red-700 hover:border-red-500  min-w-fit
+                                        lg:min-w-2`}
                                         onClick={() => {if(window.confirm('Delete the item?'))
                                             handleDelete(item.idBook);
                                         }}

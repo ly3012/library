@@ -26,4 +26,10 @@ const BOOK_API_BASE_URL = "http://localhost:8080/admin/books";
         return axios.delete(`${BOOK_API_BASE_URL}/${bookID}`);
     }
 
-export default {getBook, getBookById, createBook, deleteBook, updateBook}
+    const findBookByCriteria =(bookID)=>{
+        return axios.get(`${BOOK_API_BASE_URL}/search?query=${bookID}`);
+    }
+
+    
+
+export default {getBook, getBookById, createBook, deleteBook, updateBook, findBookByCriteria}
