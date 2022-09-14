@@ -29,7 +29,6 @@ function App() {
   }
 
   return (
-    // <Login/>
     <Router>
       <div className='App flex-col '>
         <Nav />
@@ -41,6 +40,9 @@ function App() {
           <Switch>
             <Route path="/" exact>
               <Dashboard/>
+            </Route>
+            <Route path="/login" exact>
+              <Login/>
             </Route>
             <Route path="/book" exact>
               <BookList

@@ -14,7 +14,7 @@ const Login = () => {
   return (
     <>
 
-      <div className='bg-slate-400 border-spacing-1 m-5 p-5'>
+      <div className='bg-slate-400 border-spacing-1 m-5 p-5 ml-80'>
         <form>
           <div className="mb-6 flex flex-row sm:flex-wrap md:flex-wrap">
             <label htmlFor="username" className="min-w-10 text-left  ml-0 pr-2 py-1 justify-self-start">Địa chỉ:</label>
