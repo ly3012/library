@@ -8,12 +8,9 @@ import moment from 'moment';
 
 
 const BookList = (props) => {
-
-
-
+    
     const [dataBook, setDataBook] = useState([]);
     const [dataRender, setDataRender] = useState([]);
-
 
     const handleChangeFilter = (newFilter) => {
         bookService.findBookByCriteria(newFilter)
@@ -65,7 +62,7 @@ const BookList = (props) => {
             <table className=''>
                 <thead>
                     <tr>
-                        <th>Id </th>
+                        <th>Mã sách </th>
                         <th>Name</th>
                         <th>Author</th>
                         <th>PageNumber</th>

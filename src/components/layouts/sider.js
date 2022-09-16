@@ -47,7 +47,7 @@ const Sider = (props) => {
             </div>
             <ul className="pt-6 min-h-fit h-screen">
                <NavLink activeClassName="active" to="/" exact
-                  className={`flex  rounded-md p-1 cursor-pointer hover:bg-light-white text-gray-400   hover:text-gray-100 text-sm items-center gap-x-4 `}
+                  className={`flex  rounded-md p-1 cursor-pointer hover:bg-light-white text-gray-400   hover:text-gray-100 text-sm items-center gap-x-4  focus:text-gray-100 `}
                >
                   <RiBarChartBoxFill className={` h-10 text-2xl `} />
                   <span className={`${!openSider && "hidden"} origin-left duration-200 text-lg`}>
@@ -56,7 +56,7 @@ const Sider = (props) => {
                   {/* </NavLink> */}
                </NavLink>
                <NavLink activeClassName="active" to="/book"
-                  className={`flex  rounded-md p-1 cursor-pointer hover:bg-light-white text-gray-400   hover:text-gray-100 text-sm items-center gap-x-4 `}
+                  className={`flex  rounded-md p-1 cursor-pointer hover:bg-light-white text-gray-400   hover:text-gray-100 text-sm items-center gap-x-4 focus:text-gray-100 `}
                >
                   <BiBook className={` h-10 text-2xl `} />
                   <span className={`${!openSider && "hidden"} origin-left duration-200 text-lg `}>
@@ -65,7 +65,7 @@ const Sider = (props) => {
                   {/* </NavLink> */}
                </NavLink>
                <NavLink activeClassName="active" to="/reader"
-                  className={`flex  rounded-md p-1 cursor-pointer hover:bg-light-white text-gray-400   hover:text-gray-100 text-sm items-center gap-x-4 `}
+                  className={`flex  rounded-md p-1 cursor-pointer hover:bg-light-white text-gray-400   hover:text-gray-100 text-sm items-center gap-x-4  focus:text-gray-100 `}
                >
                   <RiContactsBook2Line className={` h-10 text-2xl `} />
                   <span className={`${!openSider && "hidden"} origin-left duration-200 text-lg`}>
@@ -74,7 +74,7 @@ const Sider = (props) => {
                   {/* </NavLink> */}
                </NavLink>
                <NavLink activeClassName="active" to="/callCard"
-                  className={`flex  rounded-md p-1 cursor-pointer hover:bg-light-white text-gray-400   hover:text-gray-100 text-sm items-center gap-x-4 `}
+                  className={`flex  rounded-md p-1 cursor-pointer hover:bg-light-white text-gray-400   hover:text-gray-100 text-sm items-center gap-x-4  focus:text-gray-100 `}
                >
                   <GiNotebook className={` h-10 text-2xl `} />
                   <span className={`${!openSider && "hidden"} origin-left duration-200 text-lg`}>
@@ -83,7 +83,7 @@ const Sider = (props) => {
                   {/* </NavLink> */}
                </NavLink>
                <NavLink activeClassName="active" to="/admin"
-                  className={`flex  rounded-md p-1 cursor-pointer hover:bg-light-white text-gray-400   hover:text-gray-100 text-sm items-center gap-x-4 `}
+                  className={`flex  rounded-md p-1 cursor-pointer hover:bg-light-white text-gray-400   hover:text-gray-100 text-sm items-center gap-x-4  focus:text-gray-100 `}
                >
                   <RiAdminLine className={` h-10 text-2xl `} />
                   <span className={`${!openSider && "hidden"} origin-left duration-200 text-lg`}>

@@ -11,14 +11,22 @@ const AddCallCard = () => {
         idCallCard: '',
         idAdmin: '',
         dueDate: null,
-        idBook: []
+        books: [{}]
+    });
+
+    const [input, setInput] = useState({
+        idCallCard: '',
+        idAdmin: '',
+        dueDate: null,
+        books: ""
     });
 
     const handleEventOnChange = (event) => {
-        const newData = { ...callCard };
+        const newData = { ...input };
+
         newData[event.target.id] = event.target.value;
-        setCallCard(newData);
-        console.log("newData", callCard);
+        setInput(newData);
+        console.log("newData", newData);
     }
 
 
@@ -106,7 +114,7 @@ const AddCallCard = () => {
                                                 <input
                                                     type="date"
                                                     id="dueDate"
-                                                    value={callCard.dueDate}
+                                                    value={input.dueDate}
                                                     onChange={(event) => handleEventOnChange(event)}
                                                     className="md:min-w-20 flex-1 py-1 bg-gray-50 border border-gray-300" required=""
                                                 />
@@ -115,8 +123,8 @@ const AddCallCard = () => {
                                                 <label htmlFor="idBook" className="min-w-10 text-left  ml-0 pr-2 py-1 justify-self-start">Mã sách:</label>
                                                 <textarea
                                                     // type="textarea"
-                                                    id="idBook"
-                                                    value={callCard.idBook}
+                                                    id="books"
+                                                    value={input.books}
                                                     onChange={(event) => handleEventOnChange(event)}
                                                     className="md:min-w-20 flex-1 py-1 bg-gray-50 border border-gray-300" required=""
                                                 />

@@ -19,7 +19,7 @@ const Nav = () => {
          {/* style={{backgroundImage: `url("")`}}> */}
             <a href="/#" className="flex items-center pl-2">
                 <img src={logoPage} className="mr-3 h-6 sm:h-9" alt="Flowbite Logo" />
-                <span className="self-center text-xl font-semibold whitespace-nowrap dark:text-white">BOOK</span>
+                <span className="self-center text-xl font-semibold whitespace-nowrap dark:text-white">Library</span>
             </a> 
             <div className='dark show  flex-col flex items-center relative mr-6'>
                 <a href="/#" className="flex-col flex items-center z-50 text-2xl dark:text-white" onMouseMove= {() => setOpen(true)} onMouseOut= {() => setOpen(false)}>

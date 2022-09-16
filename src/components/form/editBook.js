@@ -11,7 +11,7 @@ const EditBook = (props) => {
 
   const [book, setBook] = useState({
     idBook: '',
-    fullName: '',
+    name: '',
     author: '',
     numberOfPages: null,
     released: null,
@@ -24,7 +24,7 @@ const EditBook = (props) => {
     setBook(newData);
     
   }
-
+console.log("book ",book);
   const saveBook = (event) => {
     bookService.updateBook(book)
       .then(response => {
@@ -74,12 +74,12 @@ const EditBook = (props) => {
           <div
             className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none"
           >
-            <div className="relative w-auto my-6 mx-auto max-w-3xl">
-              {/*content*/}
+            <div className="relative w-auto  mx-auto max-w-3xl">
+              
               <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
                 {/*header*/}
-                <div className="flex items-start justify-between p-5 border-b border-solid border-slate-200 rounded-t">
-                  <h3 className="text-3xl font-medium uppercase text-green-700 text-center pb-5">
+                <div className="flex items-start justify-between pt-4 px-3 border-b border-solid border-slate-200 rounded-t">
+                  <h3 className="text-3xl font-semibold uppercase text-green-700 text-center pb-3">
                     Sửa thông tin sách
                   </h3>
                   <button
@@ -90,11 +90,11 @@ const EditBook = (props) => {
                   </button>
                 </div>
                 {/*body*/}
-                <div className="relative p-6 flex-auto">
+                <div className="relative p-4 flex-auto">
                   <form className=' p-5' onSubmit={(event) => saveBook(event)}>
                     <div>
                       <div className="mb-6 flex flex-row sm:flex-wrap md:flex-wrap">
-                        <label htmlFor="fullName" className="min-w-10 text-left  ml-0 pr-2 py-1 justify-self-start">Id book:</label>
+                        <label htmlFor="idBook" className="min-w-10 text-left  ml-0 pr-2 py-1 justify-self-start">Id book:</label>
                         <input
                           type="text"
                           id="idBook"
@@ -104,11 +104,11 @@ const EditBook = (props) => {
                         />
                       </div>
                       <div className="mb-6 flex flex-row sm:flex-wrap md:flex-wrap">
-                        <label htmlFor="fullName" className="min-w-10 text-left  ml-0 pr-2 py-1 justify-self-start">Tên sách:</label>
+                        <label htmlFor="name" className="min-w-10 text-left  ml-0 pr-2 py-1 justify-self-start">Tên sách:</label>
                         <input
                           type="text"
-                          id="fullName"
-                          value={book.fullName}
+                          id="name"
+                          value={book.name}
                           onChange={(event) => handleEventOnChange(event)}
                           className="md:min-w-20 flex-1 py-1 bg-gray-50 border border-gray-300" required=""
                         />
@@ -144,7 +144,7 @@ const EditBook = (props) => {
                           className="md:min-w-20 flex-1 py-1 bg-gray-50 border border-gray-300" required=""
                         />
                       </div>
-                      <div className="mb-6 flex flex-row sm:flex-wrap md:flex-wrap">
+                      <div className="mb-4 flex flex-row sm:flex-wrap md:flex-wrap">
                         <label htmlFor="amount" className="min-w-10 text-left  ml-0 pr-2 py-1 justify-self-start">Số lượng:</label>
                         <input
                           type="text"

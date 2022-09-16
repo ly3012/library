@@ -13,8 +13,8 @@ import CallCard from './components/content/callCard'
 import AddBook from './components/form/addBook';
 import Login from './components/form/login'
 import React, { useCallback, useState } from "react";
-
-
+import SidebarLayout from './components/layouts/SidebarLayout';
+import { Redirect } from 'react-router';
 import {
   BrowserRouter as Router,
   Switch,
@@ -24,52 +24,25 @@ import {
 
 function App() {
   const [openSider, setOpenSider] = useState(true);
-  const updateOpenSider = (openSider) =>{
-      setOpenSider(!openSider);
+  const updateOpenSider = (openSider) => {
+    setOpenSider(!openSider);
   }
 
   return (
     <Router>
-      <div className='App flex-col '>
-        <Nav />
-        <div className={`flex justify-between `}>
-          <Sider 
-            openSider={openSider}
-            updateOpenSider = {updateOpenSider}
-            />
-          <Switch>
-            <Route path="/" exact>
-              <Dashboard/>
-            </Route>
-            <Route path="/login" exact>
-              <Login/>
-            </Route>
-            <Route path="/book" exact>
-              <BookList
-              openSider={openSider}
-              />
-            </Route>
-            <Route path="/reader" exact>
-              <Reader 
-              openSider={openSider}
-              />
-            </Route>
-            <Route path="/callCard" exact>
-              <CallCard
-              openSider={openSider}
-              />
-            </Route>
-            <Route path="/admin" exact>
-              <Admin />
-            </Route>
-            {/* <Route path="/book/add" exact>
-              <AddBook/>
-            </Route> */}
-          </Switch>
+      <Switch>
+        <div className="App">
+          <Route path={["/login","/"]} exact>
+          {/* <Route path={["/login"]} exact> */}
+            <Login />
+          </Route>
+          <Route path={["/home", "/book", "/reader", "/admin","/dashboard" ]} exact>
+          {/* <Route path={["/"]} exact> */}
+            <SidebarLayout/>
+          </Route>
         </div>
-        {/* <Footer/> */}
-      </div>
-    </Router >
+      </Switch>
+    </Router>
 
   );
 }
