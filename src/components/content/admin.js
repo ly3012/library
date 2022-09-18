@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import bookService from '../service/bookService';
+import adminService from '../service/adminService';
 import React from 'react';
 import SearchComponent from '../layouts/searchComponent';
 import AddBook from '../form/addBook';
@@ -9,12 +9,12 @@ import moment from 'moment';
 
 const Admin = (props) => {
     
-    const [dataBook, setDataBook] = useState([]);
+    const [dataUser, setDataUser] = useState([]);
     const [dataRender, setDataRender] = useState([]);
 
     const handleChangeFilter = (newFilter, event) => {
         event.preventDefault();
-        bookService.findBookByCriteria(newFilter)
+        adminService.findUserByCriteria(newFilter)
             .then(response => {
                 let data = (response && response.data) ? response.data : [];
                 setDataRender(data);
@@ -24,12 +24,10 @@ const Admin = (props) => {
             })
     }
 
-
-
     const init = () => {
-        bookService.getBook()
+        adminService.getUser()
             .then(response => {
-                setDataBook(response.data);
+                // setDataUser(response.data);
                 setDataRender(response.data);
                 // console.log("data render",dataRender);
             })
@@ -41,9 +39,10 @@ const Admin = (props) => {
         init();
     }, []);
 
+     console.log("data render",dataRender);
 
     const handleDelete = (id) => {
-        bookService.deleteBook(id)
+        adminService.deleteUser(id)
             .then(response => {
                 init();
 
@@ -63,12 +62,12 @@ const Admin = (props) => {
             <table className=''>
                 <thead>
                     <tr>
-                        <th>Id </th>
-                        <th>Name</th>
-                        <th>Author</th>
-                        <th>PageNumber</th>
-                        <th>Release</th>
-                        <th>Amount</th>
+                        <th>Mã</th>
+                        <th>Tên</th>
+                        {/* <th>Author</th> */}
+                        <th>Email</th>
+                        <th>Số điện thoại</th>
+                        {/* <th>Amount</th> */}
                         <th>Update At</th>
                         <th></th>
                     </tr>
@@ -76,18 +75,18 @@ const Admin = (props) => {
                 <tbody>
                     {dataRender.length>0 && dataRender.map((item) => {
                         return (
-                            < tr key={item.idBook}>
+                            < tr key={item.id}>
 
-                                <td>{item.idBook}</td>
+                                <td>{item.id}</td>
                                 <td>{item.name}</td>
-                                <td>{item.author}</td>
-                                <td>{item.numberOfPages}</td>
-                                <td>{item.released}</td>
-                                <td>{item.amount}</td>
+                                <td>{item.email}</td>
+                                <td>{item.phoneNumber}</td>
+                                {/* <td>{item.released}</td> */}
+                                {/* <td>{item.amount}</td> */}
                                 <td>{moment(item.updatedAt).format("DD/MM/YYYY, hh:mm:ss")}</td>
                                 <td>
                                     <EditBook
-                                        id={item.idBook} />
+                                        id={item.idUser} />
 
                                     <button
                                         className={`text-white active:bg-red-600 
@@ -98,7 +97,7 @@ const Admin = (props) => {
                                         lg:min-w-2`}
                                         onClick={() => {
                                             if (window.confirm('Delete the item?'))
-                                                handleDelete(item.idBook);
+                                                handleDelete(item.idUser);
                                         }}
                                     >
                                         Delete

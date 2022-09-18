@@ -65,7 +65,7 @@ const Reader = (props) => {
                         <th>Add</th>
                         <th>PhoneNumber</th>
                         <th>Email</th>
-                        <th>Status</th>
+                        {/* <th>Status</th> */}
                         <th>Update At</th>
                         <th></th>
                     </tr>
@@ -80,7 +80,7 @@ const Reader = (props) => {
                                 <td>{item.address}</td>
                                 <td>{item.phoneNumber}</td>
                                 <td>{item.email}</td>
-                                <td>{item.status}</td>
+                                {/* <td>{item.status}</td> */}
                                 {/* <td>{item.updatedAt}</td> */}
                                 <td>{moment(item.updatedAt).format("DD/MM/YYYY, hh:mm:ss")}</td>
 

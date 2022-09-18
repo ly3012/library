@@ -1,14 +1,14 @@
 import axios from 'axios';
 
-const BOOK_API_BASE_URL = "http://localhost:8080/admin/books";
+const ADMIN_API_BASE_URL = "http://localhost:8080/admin/users";
 let token = localStorage.getItem("token")
 let Authorization = `Bearer ${token}`
 
 
-const getBook = () => {
+const getUser = () => {
     var config = {
         method: 'get',
-        url: BOOK_API_BASE_URL,
+        url: ADMIN_API_BASE_URL,
         headers: {
             'Authorization': Authorization,
         }
@@ -16,23 +16,23 @@ const getBook = () => {
     return axios(config);
 }
 
-const createBook = (book) => {
+const createUser = (user) => {
     var config = {
         method: 'post',
-        url: BOOK_API_BASE_URL,
+        url: 'http://localhost:8080/api/auth/createUser',
         headers: {
             'Authorization': Authorization,
             'Content-Type': 'application/json'
         },
-        data: book
+        data: user
     };
     return axios(config)
 }
 
-const getBookById = (bookID) => {
+const getUserById = (userID) => {
     var config = {
         method: 'get',
-        url: `${BOOK_API_BASE_URL}/${bookID}`,
+        url: `${ADMIN_API_BASE_URL}/${userID}`,
         headers: {
             'Authorization': Authorization,
         }
@@ -40,23 +40,23 @@ const getBookById = (bookID) => {
     return axios(config);
 }
 
-const updateBook = (book) => {
+const updateUser = (user) => {
     var config = {
         method: 'put',
-        url: BOOK_API_BASE_URL,
+        url: ADMIN_API_BASE_URL,
         headers: {
             'Authorization': Authorization,
             'Content-Type': 'application/json'
         },
-        data: book
+        data: user
     };
     return axios(config)
 }
 
-const deleteBook = (bookID) => {
+const deleteUser = (userID) => {
     var config = {
         method: 'delete',
-        url: `${BOOK_API_BASE_URL}/${bookID}`,
+        url: `${ADMIN_API_BASE_URL}/${userID}`,
         headers: {
             'Authorization': Authorization,
         }
@@ -64,10 +64,10 @@ const deleteBook = (bookID) => {
     return axios(config);
 }
 
-const findBookByCriteria = (criteria) => {
+const findUserByCriteria = (criteria) => {
     var config = {
         method: 'get',
-        url: `${BOOK_API_BASE_URL}/search?query=${criteria}`,
+        url: `${ADMIN_API_BASE_URL}/search?query=${criteria}`,
         headers: {
             'Authorization': Authorization,
         }
@@ -75,6 +75,4 @@ const findBookByCriteria = (criteria) => {
     return axios(config);
 }
 
-
-
-export default { getBook, getBookById, createBook, deleteBook, updateBook, findBookByCriteria }
+export default { getUser, getUserById, createUser, deleteUser, updateUser, findUserByCriteria }

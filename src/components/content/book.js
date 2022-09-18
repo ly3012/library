@@ -13,7 +13,6 @@ const BookList = (props) => {
     let history = useHistory();
 
     const [keyWord, setKeyWord] = useState('');
-    const [dataBook, setDataBook] = useState([]);
     const [dataRender, setDataRender] = useState([]);
 
     const handleChangeFilter = (newFilter, event) => {
@@ -29,27 +28,24 @@ const BookList = (props) => {
     }
 
 
-
-    const init = () => {
+    const setDataBook = () => {
         bookService.getBook()
             .then(response => {
-                setDataBook(response.data);
                 setDataRender(response.data);
-                // console.log("data render",dataRender);
             })
             .catch(error => {
                 console.log('Something went wrong', error);
             })
     }
     useEffect(() => {
-        init();
+        setDataBook();
     }, []);
 
 
     const handleDelete = (id) => {
         bookService.deleteBook(id)
             .then(response => {
-                init();
+                setDataBook();
 
             })
             .catch(error => {

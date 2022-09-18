@@ -1,31 +1,80 @@
-
 import axios from 'axios';
-import httpClient from "../../http-common.js"
 
-const BOOK_API_BASE_URL = "http://localhost:8080/admin/readers";
+const READER_API_BASE_URL = "http://localhost:8080/admin/readers";
+let token = localStorage.getItem("token")
+let Authorization = `Bearer ${token}`
 
-    const getReader=()=>{
-        return axios.get(BOOK_API_BASE_URL);
-    }
 
-    const createReader =(reader)=>{
-        return axios.post(BOOK_API_BASE_URL, reader);
-    }
+const getReader = () => {
+    var config = {
+        method: 'get',
+        url: READER_API_BASE_URL,
+        headers: {
+            'Authorization': Authorization,
+        }
+    };
+    return axios(config);
+}
 
-    const getReaderById =(readerID)=>{
-        return axios.get(`${BOOK_API_BASE_URL}/${readerID}`);
-    }
+const createReader = (reader) => {
+    var config = {
+        method: 'post',
+        url: READER_API_BASE_URL,
+        headers: {
+            'Authorization': Authorization,
+            'Content-Type': 'application/json'
+        },
+        data: reader
+    };
+    return axios(config)
+}
 
-    const updateReader =(reader)=>{
-        return axios.put(`${BOOK_API_BASE_URL}`, reader);
-    }
+const getReaderById = (readerID) => {
+    var config = {
+        method: 'get',
+        url: `${READER_API_BASE_URL}/${readerID}`,
+        headers: {
+            'Authorization': Authorization,
+        }
+    };
+    return axios(config);
+}
 
-    const deleteReader =(readerID)=>{
-        return axios.delete(`${BOOK_API_BASE_URL}/${readerID}`);
-    }
+const updateReader = (reader) => {
+    var config = {
+        method: 'put',
+        url: READER_API_BASE_URL,
+        headers: {
+            'Authorization': Authorization,
+            'Content-Type': 'application/json'
+        },
+        data: reader
+    };
+    return axios(config)
+}
 
-    const findByCriteria =(criteria)=>{
-        return axios.get(`${BOOK_API_BASE_URL}/search?query=${criteria}`);
-    }
+const deleteReader = (readerID) => {
+    var config = {
+        method: 'delete',
+        url: `${READER_API_BASE_URL}/${readerID}`,
+        headers: {
+            'Authorization': Authorization,
+        }
+    };
+    return axios(config);
+}
 
-export default {getReader, getReaderById, createReader, deleteReader, updateReader, findByCriteria}
+const findReaderByCriteria = (criteria) => {
+    var config = {
+        method: 'get',
+        url: `${READER_API_BASE_URL}/search?query=${criteria}`,
+        headers: {
+            'Authorization': Authorization,
+        }
+    };
+    return axios(config);
+}
+
+
+
+export default { getReader, getReaderById, createReader, deleteReader, updateReader, findReaderByCriteria }

@@ -15,6 +15,7 @@ import Logintest from './components/form/logintest'
 import React, { useCallback, useState } from "react";
 import SidebarLayout from './components/layouts/SidebarLayout';
 import { Redirect } from 'react-router';
+import { useHistory } from 'react-router-dom';
 import {
   BrowserRouter as Router,
   Switch,
@@ -28,21 +29,11 @@ function App() {
   const updateOpenSider = (openSider) => {
     setOpenSider(!openSider);
   }
+  const [isLogin, setIsLogin] = useState(localStorage.getItem("token") ? true : false);
+  let history = useHistory();
 
-  const [userLogin, setUserLogin] = useState({
-    // const userLogin = ({
-    name: "",
-    username: "",
-    email: "",
-    phoneNumber: ""
-  })
 
-  const updateUserLogin = (name, username, email, phoneNumber) => {
-    userLogin.name = name;
-    userLogin.username = username;
-    userLogin.email = email;
-    userLogin.phoneNumber = phoneNumber;
-  }
+
   return (
     // <Router>
     //   <Switch>
@@ -61,51 +52,46 @@ function App() {
     <Router>
       <Route path={["/login", "/"]} exact>
         <Login
-          userLogin={userLogin}
-          setUserLogin={updateUserLogin}
+          isLogin={isLogin}
+          setIsLogin={setIsLogin}
         />
       </Route>
       <Route path="/dashboard" exact >
-        {/* <Router.RouteHandler {...this.props}/> */}
-        <div className='App flex-col '>
-          <Nav
-            userLogin={userLogin}
-            setUserLogin={setUserLogin}
-          />
+        {isLogin ? (<div className='App flex-col '>
+          <Nav />
           <div className={`flex justify-between `}>
             <Sider
               openSider={openSider}
               updateOpenSider={updateOpenSider}
-              userLogin={userLogin.name}
             />
-            <Dashboard userLogin={userLogin} />
+            <Dashboard />
           </div>
         </div>
+        ) : (<Redirect to='/login' />)}
 
       </Route>
 
       <Route path="/book" exact>
-        <div className='App flex-col '>
-          <Nav 
-          userLogin={userLogin}
-          setUserLogin={updateUserLogin}
-          />
+        {isLogin ? (<div className='App flex-col '>
+
+          <Nav />
           <div className={`flex justify-between `}>
             <Sider
-             userLogin={userLogin}
               openSider={openSider}
               updateOpenSider={updateOpenSider}
             />
             <BookList
-            
               openSider={openSider}
             />
           </div>
         </div>
+        ) : (<Redirect to='/login' />)}
+
 
       </Route>
       <Route path="/reader" exact>
-        <div className='App flex-col '>
+        {isLogin ? (<div className='App flex-col '>
+
           <Nav />
           <div className={`flex justify-between `}>
             <Sider
@@ -117,10 +103,11 @@ function App() {
             />
           </div>
         </div>
-
+        ) : (<Redirect to='/login' />)}
       </Route>
       <Route path="/callCard" exact>
-        <div className='App flex-col '>
+        {isLogin ? (<div className='App flex-col '>
+
           <Nav />
           <div className={`flex justify-between `}>
             <Sider
@@ -132,10 +119,10 @@ function App() {
             />
           </div>
         </div>
-
+        ) : (<Redirect to='/login' />)}
       </Route>
       <Route path="/admin" exact>
-        <div className='App flex-col '>
+        {isLogin ? (<div className='App flex-col '>
           <Nav />
           <div className={`flex justify-between `}>
             <Sider
@@ -147,7 +134,7 @@ function App() {
             />
           </div>
         </div>
-
+        ) : (<Redirect to='/login' />)}
       </Route>
     </Router>
   );
