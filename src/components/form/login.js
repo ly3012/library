@@ -1,16 +1,104 @@
 import React from 'react';
 import { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 
-const Login = () => {
-  const sendLoginRequest = () => {
-    console.log("reqquesst login");
-  }
+const Login = (props) => {
 
-  const [dataLog, setDataLog] = useState({});
+  let history = useHistory();
+
+  const [dataLogin, setDataLogin] = useState({
+    username: '',
+    password: '',
+  });
+
+
   const handleEventOnChange = (event) => {
-    setDataLog({ [event.target.id]: event.target.value })
+    const newData = { ...dataLogin };
+    newData[event.target.id] = event.target.value;
+    setDataLogin(newData)
   }
-  
+
+  const sendLoginRequest = (event) => {
+    event.preventDefault();
+    var axios = require('axios');
+    var data = JSON.stringify({
+      "username": dataLogin.username,
+      "password": dataLogin.password
+    });
+
+    var config = {
+      method: 'post',
+      url: 'http://localhost:8080/api/auth/login',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      data: data
+    };
+
+    axios(config)
+      .then(function (response) {
+        if (response.status === 200) {
+          localStorage.setItem("token",response.data.token);
+          localStorage.setItem("user_name",response.data.user.name);
+          localStorage.setItem("user_userName",response.data.user.username);
+        // let newData =  { ...props.userLogin};
+        // newData.name = response.data.user.name;
+        // newData.username = response.data.user.username;
+        // newData.phoneNumber = response.data.user.phoneNumber;
+        // newData.email = response.data.user.email;
+
+        props.setUserLogin(response.data.user.name, response.data.user.username, response.data.user.email, response.data.user.phoneNumber);
+        // console.log("newData",newData);
+        // console.log("userLogin",props.userLogin);
+
+          history.replace({ pathname: '/book' })
+          return response.data.JSON;
+        }
+        throw Error("Sai tên đăng nhập hoặc mật khẩu")
+      })
+      .catch(function (error) {
+        alert(error);
+        console.log(error);
+      });
+
+  }
+
+  // const handleSubmit = (evt) => {
+  //   evt.preventDefault();
+  //   props.authenticate();
+
+  //   userLogin(values).then((response) => {
+  //     console.log("response", response);
+  //     if (response.status === 200) {
+  //       props.setUser(response.data);
+  //       props.history.push('/dashboard');
+  //     }
+  //     else {
+  //       props.loginFailure('Something Wrong!Please Try Again');
+  //     }
+  //   }).catch((err) => {
+
+  //     if (err && err.response) {
+
+  //       switch (err.response.status) {
+  //         case 401:
+  //           console.log("401 status");
+  //           props.loginFailure("Authentication Failed.Bad Credentials");
+  //           break;
+  //         default:
+  //           props.loginFailure('Something Wrong!Please Try Again');
+
+  //       }
+  //     }
+  //     else {
+  //       props.loginFailure('Something Wrong!Please Try Again');
+  //     }
+  //   });
+
+  // }
+
+
+
   return (
     <>
       <section class="h-screen">
@@ -28,7 +116,7 @@ const Login = () => {
               />
             </div>
             <div class="xl:ml-20 xl:w-5/12 lg:w-5/12 md:w-8/12 mb-12 md:mb-0">
-              <form>
+              <form onSubmit={sendLoginRequest}>
                 {/* <div class="flex flex-row items-center justify-center lg:justify-start">
                   <p class="text-lg mb-0 mr-4">Sign in with</p>
                   <button
@@ -82,17 +170,17 @@ const Login = () => {
 
                 <div class="mb-6">
                   <input
-                    type="email"
+                    type="text"
                     className="peer ... form-control block w-full px-4 py-2 text-xl font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
-                    id="email"
-                    // value={reader.username}
+                    id="username"
+                    value={dataLogin.username}
                     onChange={(event) => handleEventOnChange(event)}
                     // className="md:min-w-20 flex-1 py-1 bg-gray-50 border border-gray-300" required=""
-                    placeholder="Email address"
+                    placeholder="Username"
                   />
-                  <p class="invisible peer-invalid:visible text-pink-600 text-sm">
+                  {/* <p class="invisible peer-invalid:visible text-pink-600 text-sm">
                     Please provide a valid email address.
-                  </p>
+                  </p> */}
                 </div>
 
                 <div class="mb-6">
@@ -100,7 +188,7 @@ const Login = () => {
                     type="password"
                     class="form-control block w-full px-4 py-2 text-xl font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                     id="password"
-                    // value={reader.password}
+                    value={dataLogin.password}
                     onChange={(event) => handleEventOnChange(event)}
                     placeholder="Password"
                   />
@@ -113,7 +201,7 @@ const Login = () => {
                       class="form-check-input  h-4 w-4 border border-gray-400 rounded-sm bg-white checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
                       id="exampleCheck2"
                     />
-                    <label class="form-check-label inline-block text-gray-800" for="exampleCheck2"
+                    <label class="form-check-label inline-block text-gray-800" htmlFor="exampleCheck2"
                     >Remember me</label
                     >
                   </div>
@@ -123,7 +211,6 @@ const Login = () => {
                 <div class="text-center lg:text-left">
                   <button
                     type="submit"
-                    onClick={() => sendLoginRequest()}
                     class="inline-block px-7 py-3 bg-blue-600 text-white font-medium text-sm leading-snug uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out"
                   >
                     Login

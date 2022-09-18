@@ -5,14 +5,19 @@ import SearchComponent from '../layouts/searchComponent';
 import AddBook from '../form/addBook';
 import EditBook from '../form/editBook';
 import moment from 'moment';
+import { useHistory } from 'react-router-dom';
 
 
 const BookList = (props) => {
-    
+
+    let history = useHistory();
+
+    const [keyWord, setKeyWord] = useState('');
     const [dataBook, setDataBook] = useState([]);
     const [dataRender, setDataRender] = useState([]);
 
-    const handleChangeFilter = (newFilter) => {
+    const handleChangeFilter = (newFilter, event) => {
+        event.preventDefault();
         bookService.findBookByCriteria(newFilter)
             .then(response => {
                 let data = (response && response.data) ? response.data : [];
@@ -56,12 +61,16 @@ const BookList = (props) => {
         <div className={`${props.openSider ? "ml-72" : "ml-20 "} content flex-1 p-7  "`}>
             <div className='headContent flex flex-row justify-between mb-7'>
                 <AddBook />
-                <SearchComponent handleChangeFilter={handleChangeFilter} />
+                <SearchComponent
+                    keyWord={keyWord}
+                    setKeyWord={setKeyWord}
+                    handleChangeFilter={handleChangeFilter} />
             </div>
 
             <table className=''>
                 <thead>
                     <tr>
+                        {/* <th>Stt</th> */}
                         <th>Mã sách </th>
                         <th>Name</th>
                         <th>Author</th>
@@ -73,10 +82,10 @@ const BookList = (props) => {
                     </tr>
                 </thead>
                 <tbody>
-                    {dataRender.length>0 && dataRender.map((item) => {
+                    {dataRender.length > 0 && dataRender.map((item, index) => {
                         return (
                             < tr key={item.idBook}>
-
+                                {/* <td>{index}</td> */}
                                 <td>{item.idBook}</td>
                                 <td>{item.name}</td>
                                 <td>{item.author}</td>
@@ -108,9 +117,10 @@ const BookList = (props) => {
                         )
                     })}
 
-                    {dataRender.length===0 &&
+                    {dataRender.length === 0 &&
+                        // history.goBack &&
                         <tr>
-                            <td colSpan={'8'} className='text-center'>NotResult...</td>
+                            <td colSpan={'8'} className='text-center'>Not Result...</td>
                         </tr>
                     }
                 </tbody>

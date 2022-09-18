@@ -9,7 +9,6 @@ const useFetch = (url, isCovidData) => {
 
     useEffect(() => {
         const ourRequest = axios.CancelToken.source() // <-- 1st step
-
         async function fetchData() {
             try {
                 let res = await axios.get(url, {

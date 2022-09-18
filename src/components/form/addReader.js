@@ -2,7 +2,8 @@ import React from 'react';
 import { FaUser } from 'react-icons/fa'
 import { useState } from 'react';
 import readerService from '../service/readerService';
-import createHistory from 'history/createBrowserHistory'
+import { useHistory } from 'react-router-dom';
+// import createHistory from 'history/createBrowserHistory'
 
 const AddReader = () => {
   const [showModal, setShowModal] = React.useState(false);
@@ -22,7 +23,7 @@ const AddReader = () => {
   }
 
   
-  const history = createHistory();
+  let history = useHistory();
   const saveReader = (event) => {
     readerService.createReader(reader)
       .then(response => {

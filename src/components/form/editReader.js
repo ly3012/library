@@ -1,10 +1,10 @@
 import React from 'react';
 import { useState } from 'react';
 import readerService from '../service/readerService';
-import createHistory from 'history/createBrowserHistory'
+import { useHistory } from 'react-router-dom';
 
 const EditReader = (props) => {
-  const history = createHistory();
+  let history = useHistory();
   const [showModal, setShowModal] = React.useState(false);
   const [showAlert, setShowAlert] = React.useState(false);
   const url = "http://localhost:8080/admin/readers";

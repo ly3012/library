@@ -2,8 +2,7 @@ import React from 'react';
 import { FaBook } from 'react-icons/fa'
 import { useState } from 'react';
 import bookService from '../service/bookService';
-import { createBrowserHistory } from 'history'
-// import createHistory from 'history/createBrowserHistory'
+import { useHistory } from 'react-router-dom';
 
 const AddBook = () => {
   const [showModal, setShowModal] = React.useState(false);
@@ -22,7 +21,7 @@ const AddBook = () => {
     setBook(newData);
   }
 
-  const history = createBrowserHistory();
+  let history = useHistory();
   const saveBook = (event) => {
     bookService.createBook(book)
       .then(response => {

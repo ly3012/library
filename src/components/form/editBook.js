@@ -1,10 +1,11 @@
 import React from 'react';
 import { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import bookService from '../service/bookService';
-import createHistory from 'history/createBrowserHistory'
+// import createHistory from 'history/createBrowserHistory'
 
 const EditBook = (props) => {
-  const history = createHistory();
+  let history = useHistory();
   const [showModal, setShowModal] = React.useState(false);
   const [showAlert, setShowAlert] = React.useState(false);
   const url = "http://localhost:8080/admin/books";
@@ -24,7 +25,7 @@ const EditBook = (props) => {
     setBook(newData);
     
   }
-console.log("book ",book);
+
   const saveBook = (event) => {
     bookService.updateBook(book)
       .then(response => {

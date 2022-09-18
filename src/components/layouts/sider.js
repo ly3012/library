@@ -12,6 +12,7 @@ import { NavLink } from 'react-router-dom';
 const Sider = (props) => {
 
    const openSider = props.openSider;
+   
 
    return (
 
@@ -30,23 +31,27 @@ const Sider = (props) => {
                <FaChevronCircleLeft />
             </div>
             <div className="flex gap-x-4 items-center border-b-yellow-900 border-b-2 pb-3 ">
-               <NavLink activeClassName="active" to="/login" exact>
+               {/* <NavLink activeClassName="active" > */}
                   <img alt="no-avatar"
                      src={avatar}
                      className={`cursor-pointer rounded-full h-20 duration-500 ${!openSider && "rotate-[360deg] h-10"
                         }`}
                   />
 
-               </NavLink>
+               {/* </NavLink> */}
+               {/* <h1>Designer</h1> */}
                <h1
-                  className={`md:hidden sm:hidden text-white origin-left font-medium text-xl duration-200 ${!openSider && "scale-0"
+                  className={` text-white origin-left font-medium text-xl duration-200 ${!openSider && "scale-0"
                      }`}
                >
-                  Designer
+                  {/* {props.userLogin.name} */}
+                  {
+                     localStorage.getItem("user_name")
+                  }
                </h1>
             </div>
             <ul className="pt-6 min-h-fit h-screen">
-               <NavLink activeClassName="active" to="/" exact
+               <NavLink activeClassName="active" to="/dashboard" exact
                   className={`flex  rounded-md p-1 cursor-pointer hover:bg-light-white text-gray-400   hover:text-gray-100 text-sm items-center gap-x-4  focus:text-gray-100 `}
                >
                   <RiBarChartBoxFill className={` h-10 text-2xl `} />

@@ -12,7 +12,8 @@ const Reader = (props) => {
     const [dataRender, setDataRender] = useState([]);
 
 
-    const handleChangeFilter = (newFilter) => {
+    const handleChangeFilter = (newFilter, event) => {
+        event.preventDefault();
         readerService.findByCriteria(newFilter)
             .then(response => {
                 let data = (response && response.data) ? response.data : [];

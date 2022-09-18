@@ -2,7 +2,6 @@ import React from 'react';
 import { FaUser } from 'react-icons/fa'
 import { useState } from 'react';
 // import callCardService from '../service/callCardService';
-import createHistory from 'history/createBrowserHistory'
 
 const AddCallCard = () => {
     const [showModal, setShowModal] = React.useState(false);

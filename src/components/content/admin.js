@@ -12,7 +12,8 @@ const Admin = (props) => {
     const [dataBook, setDataBook] = useState([]);
     const [dataRender, setDataRender] = useState([]);
 
-    const handleChangeFilter = (newFilter) => {
+    const handleChangeFilter = (newFilter, event) => {
+        event.preventDefault();
         bookService.findBookByCriteria(newFilter)
             .then(response => {
                 let data = (response && response.data) ? response.data : [];
