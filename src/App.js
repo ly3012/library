@@ -50,92 +50,89 @@ function App() {
     //   </Switch>
     // </Router>
     <Router>
-      <Route path={["/login", "/"]} exact>
-        <Login
-          isLogin={isLogin}
-          setIsLogin={setIsLogin}
-        />
-      </Route>
-      <Route path="/dashboard" exact >
-        {isLogin ? (<div className='App flex-col '>
-          <Nav />
-          <div className={`flex justify-between `}>
-            <Sider
-              openSider={openSider}
-              updateOpenSider={updateOpenSider}
-            />
-            <Dashboard />
-          </div>
-        </div>
-        ) : (<Redirect to='/login' />)}
-
-      </Route>
-
-      <Route path="/book" exact>
-        {isLogin ? (<div className='App flex-col '>
-
-          <Nav />
-          <div className={`flex justify-between `}>
-            <Sider
-              openSider={openSider}
-              updateOpenSider={updateOpenSider}
-            />
-            <BookList
-              openSider={openSider}
-            />
-          </div>
-        </div>
-        ) : (<Redirect to='/login' />)}
+      {/* {!isLogin ? ( */}
+        <Route path={["/login", "/"]} exact>
+          <Login
+            isLogin={isLogin}
+            setIsLogin={setIsLogin}
+          />
+        </Route>
+      {/* ) : (<Redirect to='/book' />)} */}
+      {isLogin ? (
+        <>
+          <Route path="/dashboard" exact >
+            <div className='App flex-col '>
+              <Nav />
+              <div className={`flex justify-between `}>
+                <Sider
+                  openSider={openSider}
+                  updateOpenSider={updateOpenSider}
+                />
+                <Dashboard />
+              </div>
+            </div>
+          </Route>
 
 
-      </Route>
-      <Route path="/reader" exact>
-        {isLogin ? (<div className='App flex-col '>
+          <Route path="/book" exact>
+            <div className='App flex-col '>
+              <Nav />
+              <div className={`flex justify-between `}>
+                <Sider
+                  openSider={openSider}
+                  updateOpenSider={updateOpenSider}
+                />
+                <BookList
+                  openSider={openSider}
+                />
+              </div>
+            </div>
+          </Route>
+          <Route path="/reader" exact>
+            <div className='App flex-col '>
+              <Nav />
+              <div className={`flex justify-between `}>
+                <Sider
+                  openSider={openSider}
+                  updateOpenSider={updateOpenSider}
+                />
+                <Reader
+                  openSider={openSider}
+                />
+              </div>
+            </div>
+          </Route>
 
-          <Nav />
-          <div className={`flex justify-between `}>
-            <Sider
-              openSider={openSider}
-              updateOpenSider={updateOpenSider}
-            />
-            <Reader
-              openSider={openSider}
-            />
-          </div>
-        </div>
-        ) : (<Redirect to='/login' />)}
-      </Route>
-      <Route path="/callCard" exact>
-        {isLogin ? (<div className='App flex-col '>
-
-          <Nav />
-          <div className={`flex justify-between `}>
-            <Sider
-              openSider={openSider}
-              updateOpenSider={updateOpenSider}
-            />
-            <CallCard
-              openSider={openSider}
-            />
-          </div>
-        </div>
-        ) : (<Redirect to='/login' />)}
-      </Route>
-      <Route path="/admin" exact>
-        {isLogin ? (<div className='App flex-col '>
-          <Nav />
-          <div className={`flex justify-between `}>
-            <Sider
-              openSider={openSider}
-              updateOpenSider={updateOpenSider}
-            />
-            <Admin
-              openSider={openSider}
-            />
-          </div>
-        </div>
-        ) : (<Redirect to='/login' />)}
-      </Route>
+          <Route path="/callCard" exact>
+            <div className='App flex-col '>
+              <Nav />
+              <div className={`flex justify-between `}>
+                <Sider
+                  openSider={openSider}
+                  updateOpenSider={updateOpenSider}
+                />
+                <CallCard
+                  openSider={openSider}
+                />
+              </div>
+            </div>
+          </Route>
+          <Route path="/admin" exact>
+            <div className='App flex-col '>
+              <Nav />
+              <div className={`flex justify-between `}>
+                <Sider
+                  openSider={openSider}
+                  updateOpenSider={updateOpenSider}
+                />
+                <Admin
+                  openSider={openSider}
+                />
+              </div>
+            </div>
+          </Route>
+        </>
+      ) : (<Redirect to='/login' />)}
     </Router>
   );
 }

@@ -61,7 +61,6 @@ const EditReader = (props) => {
             .catch(error => {
               console.log('Something went wrong', error);
             }))
-          // console.log("get reader by id",readerService.getReaderById(props.id)))
         }
 
       >
@@ -79,7 +78,7 @@ const EditReader = (props) => {
                 {/*header*/}
                 <div className="flex items-start justify-between p-5 border-b border-solid border-slate-200 rounded-t">
                   <h3 className="text-3xl font-medium uppercase text-green-700 text-center pb-5">
-                    Sửa thông tin sách
+                    Sửa thông bạn đọc
                   </h3>
                   <button
                     className="p-1 px-2 bg-slate-100 ml-auto text-center border-0 text-gray-500  float-right text-xl leading-none font-semibold outline-none focus:outline-none"
@@ -175,8 +174,7 @@ const EditReader = (props) => {
 
                       </p>
                       <hr class="border-green-600 opacity-30" />
-                      <p class="mt-4 mb-0">
-                        Whenever you need to, be sure to use margin utilities to keep things nice and tidy.
+                      <p class="mt-4 mb-0">Sửa thành công
                       </p>
                       <button
                         to="/reader"

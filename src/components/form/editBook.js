@@ -182,13 +182,13 @@ const EditBook = (props) => {
                       class="bg-green-100 rounded-lg py-5 px-6 mb-4 text-base text-green-700 fixed top-0 bottom-2/3 left-1/3 right-1/3 "
                       role="alert"
                     >
-                      <h4 class="text-2xl font-medium leading-tight mb-2">Well done!</h4>
+                      <h4 class="text-2xl font-medium leading-tight mb-2">Success!</h4>
                       <p class="mb-4">
 
                       </p>
                       <hr class="border-green-600 opacity-30" />
                       <p class="mt-4 mb-0">
-                        Whenever you need to, be sure to use margin utilities to keep things nice and tidy.
+                        Sửa sách thành công
                       </p>
                       <button
                         to="/book"

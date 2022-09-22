@@ -1,30 +1,29 @@
 import React from 'react';
 import { FaUser } from 'react-icons/fa'
 import { useState, useEffect } from 'react';
-import Select from "react-select";
-import callCardService from '../service/callCardService';
-import bookService from '../service/bookService';
-
+import roleService from '../service/roleService';
+import userService from '../service/userService';
 import { useHistory } from 'react-router-dom';
+import Multiselect from 'multiselect-react-dropdown';
+import Select from "react-select";
 
-// import callCardService from '../service/callCardService';
-
-const AddCallCard = () => {
+const AddUser = () => {
     const [showModal, setShowModal] = React.useState(false);
     const [showAlert, setShowAlert] = React.useState(false);
-    const [selectedOptions, setSelectedOptions] = useState([]);
-
-
-    const [input, setInput] = useState({
-        idReader: '',
-        idAdmin: '',
-        books: ""
+    const [user, setUser] = useState({
+        name: null,
+        username: null,
+        password: null,
+        email: null,
+        phoneNumber: null,
     });
-    const [books, setBooks] = useState([]);
-    const getBooks = () => {
-        bookService.getBook()
+
+    const [roles, setRoles] = useState([]);
+    const [selectedOptions, setSelectedOptions] = useState([]);
+    const getRole = () => {
+        roleService.getRoles()
             .then(response => {
-                setBooks(response.data);
+                setRoles(response.data);
             })
             .catch(error => {
                 console.log('Something went wrong', error);
@@ -32,39 +31,60 @@ const AddCallCard = () => {
     }
 
     useEffect(() => {
-        getBooks();
+        getRole();
     }, []);
+
+
+    const options = roles.map((item, index) => ({
+        value: item.name,
+        label: item.name
+    }
+    ))
+
+
     const handleEventOnChange = (event) => {
-        const newData = { ...input };
+        const newData = { ...user };
         newData[event.target.id] = event.target.value;
-        setInput(newData);
+        setUser(newData);
     }
 
+   
+    const handleSelectOptions = (event) => {
+        console.log("event",event);
 
-    const history = useHistory();
-    const saveCallCard = (event) => {
-        event.preventDefault();
-        const callCard = {
-            idReader: input.idReader,
-            idUser: input.idAdmin,
-            idbooks: selectedOptions.map(item => item.id)
-        };
-        console.log("callCard",JSON.stringify(callCard));
-        callCardService.createCallCard(callCard)
+        setSelectedOptions(event);
+        console.log("selectedOptions",selectedOptions);
+    }
+    
+
+    const userCreate = {
+            name: user.name,
+            username: user.username,
+            password: user.password,
+            email: user.email,
+            phoneNumber: user.phoneNumber,
+            roles: selectedOptions.map((item)=>{
+                return item.value;
+            })
+        
+    }
+    let history = useHistory();
+    const saveUser = (event) => {
+        userService.createUser(userCreate)
             .then(response => {
-                // console.log("employee added successfully", response.data);
+                console.log("employee added successfully", response.data);
                 setShowAlert(true);
-                history.go(0)
-                // history.replace({pathname: "/callCard"})
+                history.go("/admin")
 
+                // history.replace({pathname: "/admin"})
             })
             .catch(error => {
-                console.log('something went wrong', error);
+                alert("Vui lòng điền đúng thông tin");
+                console.log('something went wroing', error);
             })
 
 
     }
-
     const styles = {
         multiValue: styles => {
             return {
@@ -73,21 +93,6 @@ const AddCallCard = () => {
             };
         }
     };
-
-    const options = books.map((item, index) => ({
-
-        value: item.name,
-        id: item.idBook,
-        label: item.idBook + ". " + item.name
-    }
-    ))
-    console.log(books);
-    const handleSelectOptions = (event) => {
-        console.log("event", event);
-
-        setSelectedOptions(event);
-        console.log("selectedOptions", selectedOptions);
-    }
 
     return (
         <>
@@ -107,15 +112,15 @@ const AddCallCard = () => {
             {showModal ? (
                 <>
                     <div
-                        className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none"
+                        className=" max-h-fit top-0 left-0 right-0 bottom-2 justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none"
                     >
-                        <div className="relative w-auto my-6 mx-auto max-w-3xl">
+                        <div className="relative w-auto my-3 mx-auto max-w-2xl">
                             {/*content*/}
                             <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
                                 {/*header*/}
-                                <div className="flex items-start justify-between p-5 border-b border-solid border-slate-200 rounded-t">
+                                <div className="flex items-start justify-between px-5 pt-5 pb-0 border-b border-solid border-slate-200 rounded-t">
                                     <h3 className="text-3xl font-medium uppercase text-green-700 text-center pb-5">
-                                        Tạo phiếu mượn
+                                        Tạo tài khoản
                                     </h3>
                                     <button
                                         className="p-1 px-2 bg-slate-100 ml-auto text-center border-0 text-gray-500  float-right text-xl leading-none font-semibold outline-none focus:outline-none"
@@ -125,63 +130,74 @@ const AddCallCard = () => {
                                     </button>
                                 </div>
                                 {/*body*/}
-                                <div className="relative p-6 flex-auto">
-                                    <form className=' p-5'
-                                        // onSubmit={(event) => saveCallCard(event)}
-                                    >
+                                <div className="relative p-5 px-3 flex-auto">
+                                    <form className=' p-5' onSubmit={(event) => saveUser(event)}>
                                         <div>
                                             <div className="mb-6 flex flex-row sm:flex-wrap md:flex-wrap">
-                                                <label htmlFor="idReader" className="min-w-10 text-left  ml-0 pr-2 py-1 justify-self-start">Mã người mượn:</label>
+                                                <label htmlFor="name" className="min-w-10 text-left  ml-0 pr-2 py-1 justify-self-start">Tên người dùng:</label>
                                                 <input
                                                     type="text"
-                                                    id="idReader"
-                                                    value={input.idReader}
+                                                    id="name"
+                                                    value={user.name}
                                                     onChange={(event) => handleEventOnChange(event)}
                                                     className="md:min-w-20 flex-1 py-1 bg-gray-50 border border-gray-300" required=""
                                                 />
                                             </div>
                                             <div className="mb-6 flex flex-row sm:flex-wrap md:flex-wrap">
-                                                <label htmlFor="idAdmin" className="min-w-10 text-left  ml-0 pr-2 py-1 justify-self-start">Mã Nhân viên:</label>
+                                                <label htmlFor="username" className="min-w-10 text-left  ml-0 pr-2 py-1 justify-self-start">Tên đăng nhập:</label>
                                                 <input
                                                     type="text"
-                                                    id="idAdmin"
-                                                    value={input.idAdmin}
+                                                    id="username"
+                                                    value={user.username}
                                                     onChange={(event) => handleEventOnChange(event)}
                                                     className="md:min-w-20 flex-1 py-1 bg-gray-50 border border-gray-300" required=""
                                                 />
                                             </div>
-                                            {/* <div className="mb-6 flex flex-row sm:flex-wrap md:flex-wrap">
+                                            <div className="mb-6 flex flex-row sm:flex-wrap md:flex-wrap">
 
-                                                <label htmlFor="dueDate" className="min-w-10 text-left  ml-0 pr-2 py-1 justify-self-start">Ngày hẹn trả: </label>
+                                                <label htmlFor="password" className="min-w-10 text-left  ml-0 pr-2 py-1 justify-self-start">Mật khẩu:</label>
                                                 <input
-                                                    type="date"
-                                                    id="dueDate"
-                                                    value={input.dueDate}
+                                                    type="password"
+                                                    id="password"
+                                                    value={user.password}
                                                     onChange={(event) => handleEventOnChange(event)}
                                                     className="md:min-w-20 flex-1 py-1 bg-gray-50 border border-gray-300" required=""
                                                 />
-                                            </div> */}
-                                            {/* <div className="mb-6 flex flex-row sm:flex-wrap md:flex-wrap">
-                                                <label htmlFor="idBook" className="min-w-10 text-left  ml-0 pr-2 py-1 justify-self-start">Mã sách:</label>
-                                                <textarea
-                                                    // type="textarea"
-                                                    id="books"
-                                                    value={input.books}
-                                                    onChange={(event) => handleEventOnChange(event)}
-                                                    className="md:min-w-20 flex-1 py-1 bg-gray-50 border border-gray-300" required=""
-                                                />
-                                            </div> */}
+                                            </div>
                                             <div className="mb-6 flex flex-row sm:flex-wrap md:flex-wrap">
-                                                <label htmlFor="idBook" className="min-w-10 text-left  ml-0 pr-2 py-1 justify-self-start">Mã sách:</label>
+                                                <label htmlFor="email" className="min-w-10 text-left  ml-0 pr-2 py-1 justify-self-start">Email:</label>
+                                                <input
+                                                    type="email"
+                                                    id="email"
+                                                    value={user.email}
+                                                    onChange={(event) => handleEventOnChange(event)}
+                                                    className="md:min-w-20 flex-1 py-1 bg-gray-50 border border-gray-300" required=""
+                                                />
+                                            </div>
+                                            <div className="mb-6 flex flex-row sm:flex-wrap md:flex-wrap">
+                                                <label htmlFor="phoneNumber" className="min-w-10 text-left  ml-0 pr-2 py-1 justify-self-start">Số điện thoại:</label>
+                                                <input
+                                                    type="text"
+                                                    id="phoneNumber"
+                                                    value={user.phoneNumber}
+                                                    onChange={(event) => handleEventOnChange(event)}
+                                                    className="md:min-w-20 flex-1 py-1 bg-gray-50 border border-gray-300" required=""
+                                                />
+                                            </div>
+
+                                            <div className=" flex flex-row sm:flex-wrap md:flex-wrap">
+                                                <label htmlFor="roles" className="min-w-10 text-left  ml-0 pr-2 py-1 justify-self-start">Roles:</label>
                                                 <Select
                                                     styles={styles}
-                                                    className="basic-multi-select border border-gray-300 md:min-w-20  bg-gray-50 max-w-sm cursor-pointer" required=""
+                                                    className="basic-multi-select border border-gray-300 md:min-w-20  bg-gray-50 max-w-20 cursor-pointer" required=""
+                                                
                                                     closeMenuOnSelect={false}
                                                     isMulti
                                                     options={
                                                         options
                                                     }
                                                     // defaultValue={options[0]}
+
                                                     onChange={event => handleSelectOptions(event)}
                                                 />
 
@@ -202,7 +218,7 @@ const AddCallCard = () => {
                                     <button
                                         className="bg-emerald-600 text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                                         type="submit"
-                                        onClick={(event) => saveCallCard(event)}
+                                        onClick={() => saveUser()}
                                     >
                                         Save Changes
                                     </button>
@@ -211,16 +227,16 @@ const AddCallCard = () => {
                                             class="bg-green-100 rounded-lg py-5 px-6 mb-4 text-base text-green-700 fixed top-0 bottom-2/3 left-1/3 right-1/3 "
                                             role="alert"
                                         >
-                                            <h4 class="text-2xl font-medium leading-tight mb-2">Success!</h4>
+                                            <h4 class="text-2xl font-medium leading-tight mb-2">Well done!</h4>
                                             <p class="mb-4">
 
                                             </p>
                                             <hr class="border-green-600 opacity-30" />
                                             <p class="mt-4 mb-0">
-                                               Thêm phiếu mượn thành công
+                                                Whenever you need to, be sure to use margin utilities to keep things nice and tidy.
                                             </p>
                                             <button
-                                                to="/callCard"
+                                                to="/user"
                                                 class="font-bold btn border-spacing-2 bg-green-700
                         text-white active:bg-green-800 
                         text-sm py-2 px-4 m-1 rounded shadow hover:shadow-lg outline-none 
@@ -244,6 +260,8 @@ const AddCallCard = () => {
             ) : null}
         </>
     );
+
+
 }
 
-export default AddCallCard;
+export default AddUser;

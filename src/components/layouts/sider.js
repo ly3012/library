@@ -74,7 +74,7 @@ const Sider = (props) => {
                >
                   <RiContactsBook2Line className={` h-10 text-2xl `} />
                   <span className={`${!openSider && "hidden"} origin-left duration-200 text-lg`}>
-                     Quản lý thành viên
+                     Quản lý người mượn
                   </span>
                   {/* </NavLink> */}
                </NavLink>
@@ -92,7 +92,7 @@ const Sider = (props) => {
                >
                   <RiAdminLine className={` h-10 text-2xl `} />
                   <span className={`${!openSider && "hidden"} origin-left duration-200 text-lg`}>
-                     Quản trị Admin
+                     Quản lý tài khoản
                   </span>
                </NavLink>
 

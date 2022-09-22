@@ -1,20 +1,20 @@
 import { useEffect, useState } from 'react';
-import readerService from '../service/readerService';
+import callCardService from '../service/callCardService';
 import React from 'react';
 import SearchComponent from '../layouts/searchComponent';
 import AddCallCard from '../form/addCallCard';
-import EditReader from '../form/editReader';
 import moment from 'moment';
+import SetStatus from '../form/editCallCard';
 
 const CallCard = (props) => {
 
-    // const [dataRender, setDataRender] = useState([]);
     const [dataRender, setDataRender] = useState([]);
+    //  const [state, setstate] = useState(false);
 
 
     const handleChangeFilter = (newFilter, event) => {
         event.preventDefault();
-        readerService.findByCriteria(newFilter)
+        callCardService.findByCriteria(newFilter)
             .then(response => {
                 let data = (response && response.data) ? response.data : [];
                 setDataRender(data);
@@ -25,10 +25,9 @@ const CallCard = (props) => {
     }
 
     const init = () => {
-        readerService.getReader()
+        callCardService.getCallCard()
             .then(response => {
                 setDataRender(response.data);
-                console.log("data reader:", dataRender);
             })
             .catch(error => {
                 console.log('Something went wrong', error);
@@ -38,8 +37,9 @@ const CallCard = (props) => {
         init();
     }, []);
 
+    console.log("dataRender", dataRender);
     const handleDelete = (id) => {
-        readerService.deleteReader(id)
+        callCardService.deleteCallCard(id)
             .then(response => {
                 init();
 
@@ -60,11 +60,10 @@ const CallCard = (props) => {
             <table className='mt-3'>
                 <thead>
                     <tr>
-                        <th>Id</th>
-                        <th>Name</th>
-                        <th>Add</th>
-                        <th>PhoneNumber</th>
-                        <th>Email</th>
+                        <th>ID</th>
+                        <th>Admin</th>
+                        <th>Reader</th>
+                        <th>Books</th>
                         <th>Status</th>
                         <th>Update At</th>
                         <th></th>
@@ -73,21 +72,46 @@ const CallCard = (props) => {
                 <tbody>
                     {dataRender.map((item) => {
                         return (
-                            < tr key={item.idReader}>
+                            < tr key={item.idCallSlip}>
 
-                                <td>{item.idReader}</td>
-                                <td>{item.fullName}</td>
-                                <td>{item.address}</td>
-                                <td>{item.phoneNumber}</td>
-                                <td>{item.email}</td>
-                                <td>{item.status}</td>
-                                {/* <td>{item.updatedAt}</td> */}
-                                <td>{moment(item.updatedAt).format("DD/MM/YYYY, hh:mm:ss")}</td>
+                                <td>{item.idCallSlip}</td>
+                                <td>{item.user.id + ". "}{item.user.name}</td>
+
+                                <td>{item.reader.idReader + ". "} {item.reader.fullName}</td>
+                                {/*                                 
+                                <td>{item.books.map=(book)=>{
+                                    return (
+                                        <span>
+                                            {book.name}
+                                            <br/>
+                                            </span>
+                                    )
+
+                                }}
+                                </td> */}
+                                <td>{item.books.reduce((prev, item, index) => {
+                                    return(` ${prev} ${(index + 1)}. ${item.name}
+                                    \r\n`)}, "")
+                                    // return (
+                                        // <li> { prev + (index + 1) + ". " + item.name}</li>)
+                                        // <span>
+                                        //     { prev + (index + 1) + ". " + item.name}
+                                        //     <br/>
+                                        // </span>)
+                                // }, "")
+                                }
+                                </td>
+
+
+                                <td>{item.status ? "Đã trả" : "Chưa trả"}</td>
+
+                                {/* <td>{item.books}</td> */}
+                                <td>{moment(item.created).format("DD/MM/YYYY, hh:mm:ss")}</td>
 
                                 <td>
-                                    <EditReader
-                                        id={item.idReader} />
-
+                                    <SetStatus
+                                        id={item.idCallSlip}
+                                        status={item.status} />
                                     <button
                                         className={`text-white active:bg-red-600 
                                             text-sm py-1 px-3 m-1 rounded shadow hover:shadow-lg outline-none 
@@ -104,6 +128,8 @@ const CallCard = (props) => {
                                 </td>
 
                             </tr>
+
+                            // <div>Not Data</div>
                         )
                     })}
                 </tbody>

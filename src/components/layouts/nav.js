@@ -44,7 +44,7 @@ const Nav = (props) => {
                     (<div className={` text-gray-100 cursor-pointer  list-none  rounded shadow my-0 flex-col flex items-center  absolute top-16 mx-2 mb-2  bg-amber-900`} id="dropdown">
                         <div className="py-1 text-gray-100 " aria-labelledby="dropdown">
                             <li>
-                                <p className="text-sm hover:bg-yellow-700 text-gray-100 block px-4 py-2 min-w-10">
+                                <p className="text-sm rounded font-bold hover:bg-yellow-800 text-gray-100 block px-4 py-2 min-w-10">
                                     {
                                         localStorage.getItem("user_name")}
                                 </p>
@@ -53,7 +53,7 @@ const Nav = (props) => {
                                 <button
                                    onClick={Logout}
                                     className={` text-white font-bold  
-                                    text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none 
+                                    text-sm px-6 py-3 rounded shadow hover:shadow-sm outline-none 
                                     focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150
                                     inline-flex items-center bg-amber-900 hover:bg-yellow-800 
                                     border-b-4 border-yellow-900 hover:border-yellow-700  min-w-fit

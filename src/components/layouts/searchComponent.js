@@ -1,9 +1,11 @@
 import React from "react";
 import {useState} from "react";
+import { useHistory } from "react-router-dom";
 
 const SearchComponent = (props) => {
 
     const [keyWord, setKeyWord] = useState('');
+    const history = useHistory();
     
     const handleEventOnChange =(event)=>{
         setKeyWord(event.target.value)
@@ -25,7 +27,13 @@ const SearchComponent = (props) => {
                     placeholder="Search..."
                     value={keyWord}
                     onChange={(event) => handleEventOnChange(event)}
-                    onClick= {()=>setKeyWord("")}
+                    onClick= {(event)=>{
+                        setKeyWord("");
+                        // history.go(0)
+                        // props.handleChangeFilter(keyWord, event)
+                    }
+                    }
+                    // onClick={()}
 
                 />
                 <button className="px-4 text-white bg-yellow-700 border-l rounded hover:bg-yellow-800"

@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
-import adminService from '../service/adminService';
+import userService from '../service/userService';
 import React from 'react';
 import SearchComponent from '../layouts/searchComponent';
-import AddBook from '../form/addBook';
+import AddUser from '../form/addUser';
 import EditBook from '../form/editBook';
 import moment from 'moment';
 
@@ -14,7 +14,7 @@ const Admin = (props) => {
 
     const handleChangeFilter = (newFilter, event) => {
         event.preventDefault();
-        adminService.findUserByCriteria(newFilter)
+        userService.findUserByCriteria(newFilter)
             .then(response => {
                 let data = (response && response.data) ? response.data : [];
                 setDataRender(data);
@@ -25,7 +25,7 @@ const Admin = (props) => {
     }
 
     const init = () => {
-        adminService.getUser()
+        userService.getUser()
             .then(response => {
                 // setDataUser(response.data);
                 setDataRender(response.data);
@@ -39,13 +39,12 @@ const Admin = (props) => {
         init();
     }, []);
 
-     console.log("data render",dataRender);
+    //  console.log("data render",dataRender);
 
     const handleDelete = (id) => {
-        adminService.deleteUser(id)
+        userService.deleteUser(id)
             .then(response => {
                 init();
-
             })
             .catch(error => {
                 console.log('Something went wrong', error);
@@ -55,38 +54,46 @@ const Admin = (props) => {
     return (
         <div className={`${props.openSider ? "ml-72" : "ml-20 "} content flex-1 p-7  "`}>
             <div className='headContent flex flex-row justify-between mb-7'>
-                <AddBook />
+                <AddUser/>
                 <SearchComponent handleChangeFilter={handleChangeFilter} />
             </div>
 
             <table className=''>
                 <thead>
                     <tr>
-                        <th>Mã</th>
+                        <th>STT</th>
                         <th>Tên</th>
                         {/* <th>Author</th> */}
                         <th>Email</th>
                         <th>Số điện thoại</th>
-                        {/* <th>Amount</th> */}
+                        <th>Roles:</th>
                         <th>Update At</th>
                         <th></th>
                     </tr>
                 </thead>
                 <tbody>
-                    {dataRender.length>0 && dataRender.map((item) => {
+                    {dataRender.length>0 && dataRender.map((item,index) => {
+                        var role ="";
+                        item.roles.forEach(element => {
+                            if(element.name === "ROLE_USER") role += `USER `;
+                            if(element.name === "ROLE_ADMIN") role += `ADMIN `;
+                            // role += `${element.name} `;
+                        });
+                       
+                        
                         return (
                             < tr key={item.id}>
-
-                                <td>{item.id}</td>
+                                <td>{index+1}</td>
+                                {/* <td>{item.id}</td> */}
                                 <td>{item.name}</td>
                                 <td>{item.email}</td>
                                 <td>{item.phoneNumber}</td>
                                 {/* <td>{item.released}</td> */}
-                                {/* <td>{item.amount}</td> */}
+                                <td>{role}</td>
                                 <td>{moment(item.updatedAt).format("DD/MM/YYYY, hh:mm:ss")}</td>
                                 <td>
                                     <EditBook
-                                        id={item.idUser} />
+                                        id={item.id} />
 
                                     <button
                                         className={`text-white active:bg-red-600 
@@ -97,7 +104,7 @@ const Admin = (props) => {
                                         lg:min-w-2`}
                                         onClick={() => {
                                             if (window.confirm('Delete the item?'))
-                                                handleDelete(item.idUser);
+                                                handleDelete(item.id);
                                         }}
                                     >
                                         Delete
