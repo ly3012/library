@@ -7,17 +7,19 @@ import callCardService from '../service/callCardService';
 
 const SetStatus = (props) => {
     let history = useHistory();
+    const [status, setStatus] = useState(props.status);
 
-    const handleSubmit = ()=>{
+    const handleSubmit = () => {
         // event.preventDefault();
         callCardService.setStatus(props.id).then(function (response) {
             console.log(JSON.stringify(response.data));
             // props.setStatus(true);
-            history.go(0);
-          })
-          .catch(function (error) {
-            console.log(error);
-          });
+            // history.go(0);
+            setStatus(true);
+        })
+            .catch(function (error) {
+                console.log(error);
+            });
     }
 
     return (
@@ -25,11 +27,11 @@ const SetStatus = (props) => {
             <button
                 // {props.status} ? disable : null 
                 // disabled = {props.status?true:false}
-                className={` ${props.status?
+                className={` ${status ?
                     `text-white  text-sm py-1 px-3 m-1 rounded shadow  
                     inline-flex items-center bg-gray-400 cursor-text
                      `
-                    :`
+                    : `
                  text-white active:bg-blue-600 
                     text-sm py-1 px-3 m-1 rounded shadow hover:shadow-lg outline-none 
                     focus:outline-none  ease-linear transition-all duration-150
@@ -38,11 +40,11 @@ const SetStatus = (props) => {
                     lg:w-16"
         `}`}
                 type="button"
-                onClick={() => {handleSubmit()}
+                onClick={() => { handleSubmit() }
                 }
 
             >
-                <div className='m-0 pl-1'>Status</div>
+                <div className='m-0 pl-1'>Đã trả</div>
             </button>
         </>
     );

@@ -4,7 +4,9 @@ import { useState } from 'react';
 import bookService from '../service/bookService';
 import { useHistory } from 'react-router-dom';
 
-const AddBook = () => {
+const AddBook = (props) => {
+  const { saveBook } = props;
+
   const [showModal, setShowModal] = React.useState(false);
   const [showAlert, setShowAlert] = React.useState(false);
   const [book, setBook] = useState({
@@ -22,19 +24,21 @@ const AddBook = () => {
   }
 
   let history = useHistory();
-  const saveBook = (event) => {
-    bookService.createBook(book)
-      .then(response => {
-        console.log("employee added successfully", response.data);
-        setShowAlert(true);
-        history.go("/book")
-        // history.replace({pathname: "/book"})
-      })
-      .catch(error => {
-        console.log('something went wroing', error);
-      })
+
+
+  const handleSubmit = () => {
+    setShowAlert(true);
+    setTimeout(() => {
+      setShowAlert(false);
+    }, 2000);
+    setTimeout(() => {
+      setShowModal(false);
+    }, 1200);
+    // setShowModal(false);
+    saveBook(book);
+    setBook({});
   }
-  
+
 
   return (
     <>
@@ -143,7 +147,7 @@ const AddBook = () => {
                   <button
                     className="bg-emerald-600 text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                     type="submit"
-                    onClick={() => saveBook()}
+                    onClick={() => handleSubmit()}
                   >
                     Save Changes
                   </button>
@@ -158,7 +162,7 @@ const AddBook = () => {
                       </p>
                       <hr class="border-green-600 opacity-30" />
                       <p class="mt-4 mb-0">
-                       Thêm sách thành công
+                        Thêm sách thành công
                       </p>
                       <button
                         to="/book"

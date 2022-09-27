@@ -5,39 +5,37 @@ import bookService from '../service/bookService';
 // import createHistory from 'history/createBrowserHistory'
 
 const EditBook = (props) => {
-  let history = useHistory();
+  // let history = useHistory();
+  const updateBook = props.updateBook;
   const [showModal, setShowModal] = React.useState(false);
   const [showAlert, setShowAlert] = React.useState(false);
-  const url = "http://localhost:8080/admin/books";
 
-  const [book, setBook] = useState({
-    idBook: '',
-    name: '',
-    author: '',
-    numberOfPages: null,
-    released: null,
-    amount: null
-  });
-  
+  // const [book, setBook] = useState({
+  //   idBook: '',
+  //   name: '',
+  //   author: '',
+  //   numberOfPages: null,
+  //   released: null,
+  //   amount: null
+  // });
+
+  const [book, setBook] = useState(props.book);
   const handleEventOnChange = (event) => {
     const newData = { ...book };
     newData[event.target.id] = event.target.value;
     setBook(newData);
-    
+
   }
 
-  const saveBook = (event) => {
-    bookService.updateBook(book)
-      .then(response => {
-        setShowAlert(true);
-        setBook([])
-        history.go(0)
-      })
-      .catch(error => {
-        console.log('something went wroing', error);
-      })
-
-
+  const handleSubmit = () => {
+    setShowAlert(true);
+    setTimeout(() => {
+      setShowAlert(false);
+    }, 2000);
+    setTimeout(() => {
+      setShowModal(false);
+    }, 1200);
+    updateBook(book);
   }
 
 
@@ -67,7 +65,7 @@ const EditBook = (props) => {
         }
 
       >
-        
+
         <div className='m-0 pl-1'>Edit</div>
       </button>
       {showModal ? (
@@ -76,7 +74,7 @@ const EditBook = (props) => {
             className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none"
           >
             <div className="relative w-auto  mx-auto max-w-3xl">
-              
+
               <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
                 {/*header*/}
                 <div className="flex items-start justify-between pt-4 px-3 border-b border-solid border-slate-200 rounded-t">
@@ -92,7 +90,7 @@ const EditBook = (props) => {
                 </div>
                 {/*body*/}
                 <div className="relative p-4 flex-auto">
-                  <form className=' p-5' onSubmit={(event) => saveBook(event)}>
+                  <form className=' p-5' onSubmit={handleSubmit}>
                     <div>
                       <div className="mb-6 flex flex-row sm:flex-wrap md:flex-wrap">
                         <label htmlFor="idBook" className="min-w-10 text-left  ml-0 pr-2 py-1 justify-self-start">Id book:</label>
@@ -172,7 +170,7 @@ const EditBook = (props) => {
                   <button
                     className="bg-emerald-600 text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                     type="submit"
-                    onClick={() => saveBook()}
+                    onClick={() => handleSubmit()}
 
                   >
                     Save Changes

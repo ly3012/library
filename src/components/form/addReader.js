@@ -5,7 +5,9 @@ import readerService from '../service/readerService';
 import { useHistory } from 'react-router-dom';
 // import createHistory from 'history/createBrowserHistory'
 
-const AddReader = () => {
+const AddReader = (props) => {
+  const { saveReader } = props;
+
   const [showModal, setShowModal] = React.useState(false);
   const [showAlert, setShowAlert] = React.useState(false);
   const [reader, setReader] = useState({
@@ -19,26 +21,19 @@ const AddReader = () => {
     const newData = { ...reader };
     newData[event.target.id] = event.target.value;
     setReader(newData);
-    console.log("newData",reader);
+    console.log("newData", reader);
   }
 
-  
+  const handleSubmit = () => {
+    setShowAlert(true);
+    saveReader(reader);
+    setReader({});
+  }
+
+
   let history = useHistory();
-  const saveReader = (event) => {
-    readerService.createReader(reader)
-      .then(response => {
-        console.log("employee added successfully", response.data);
-        setShowAlert(true);
-        history.go(0)
-        
-      })
-      .catch(error => {
-        console.log('something went wrong', error);
-      })
 
 
-  }
-  
 
   return (
     <>
@@ -52,7 +47,7 @@ const AddReader = () => {
         type="button"
         onClick={() => setShowModal(true)}
       >
-        <FaUser/>
+        <FaUser />
         <div className='m-0 pl-1'>Add</div>
       </button>
       {showModal ? (
@@ -137,7 +132,7 @@ const AddReader = () => {
                   <button
                     className="bg-emerald-600 text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                     type="submit"
-                    onClick={() => saveReader()}
+                    onClick={() => handleSubmit()}
                   >
                     Save Changes
                   </button>
@@ -146,13 +141,13 @@ const AddReader = () => {
                       class="bg-green-100 rounded-lg py-5 px-6 mb-4 text-base text-green-700 fixed top-0 bottom-2/3 left-1/3 right-1/3 "
                       role="alert"
                     >
-                      <h4 class="text-2xl font-medium leading-tight mb-2">Well done!</h4>
+                      <h4 class="text-2xl font-medium leading-tight mb-2">Success!</h4>
                       <p class="mb-4">
 
                       </p>
                       <hr class="border-green-600 opacity-30" />
                       <p class="mt-4 mb-0">
-                        Whenever you need to, be sure to use margin utilities to keep things nice and tidy.
+                        Thêm bạn đọc thành công!
                       </p>
                       <button
                         to="/reader"

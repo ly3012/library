@@ -41,11 +41,44 @@ const BookList = (props) => {
         setDataBook();
     }, []);
 
+    const saveBook = (data) => {
+        bookService.createBook(data);
+        bookService.getBook()
+            .then(response => {
+                setDataRender(response.data);
+            })
+            .catch(error => {
+                console.log('something went wroing', error);
+            })
+    }
 
-    const handleDelete = (id) => {
+    const updateBook = (data) => {
+
+        bookService.updateBook(data)
+            .then(response => {
+                // const newDataRender = [...dataRender];
+                // const index = dataRender.findIndex(x => x.id === data.id);
+                // console.log(index);
+                // newDataRender[index] = data;
+                bookService.getBook()
+                    .then(res => {
+                        setDataRender(res.data);
+                    })
+            })
+            .catch(error => {
+                console.log('something went wroing', error);
+            })
+
+
+    }
+
+    const handleDelete = (id, index) => {
         bookService.deleteBook(id)
             .then(response => {
-                setDataBook();
+                const newDataRender = [...dataRender];
+                newDataRender.splice(index, 1);
+                setDataRender(newDataRender);
+                // setDataBook();
 
             })
             .catch(error => {
@@ -56,7 +89,8 @@ const BookList = (props) => {
     return (
         <div className={`${props.openSider ? "ml-72" : "ml-20 "} content flex-1 p-7  "`}>
             <div className='headContent flex flex-row justify-between mb-7'>
-                <AddBook />
+                <AddBook saveBook={saveBook}
+                />
                 <SearchComponent
                     keyWord={keyWord}
                     setKeyWord={setKeyWord}
@@ -91,7 +125,8 @@ const BookList = (props) => {
                                 <td>{moment(item.updatedAt).format("DD/MM/YYYY, hh:mm:ss")}</td>
                                 <td>
                                     <EditBook
-                                        id={item.idBook} />
+                                        book={item}
+                                        updateBook={updateBook} />
 
                                     <button
                                         className={`text-white active:bg-red-600 
@@ -102,7 +137,7 @@ const BookList = (props) => {
                                         lg:min-w-2`}
                                         onClick={() => {
                                             if (window.confirm('Delete the item?'))
-                                                handleDelete(item.idBook);
+                                                handleDelete(item.idBook, index);
                                         }}
                                     >
                                         Delete

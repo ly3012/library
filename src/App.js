@@ -51,12 +51,12 @@ function App() {
     // </Router>
     <Router>
       {/* {!isLogin ? ( */}
-        <Route path={["/login", "/"]} exact>
-          <Login
-            isLogin={isLogin}
-            setIsLogin={setIsLogin}
-          />
-        </Route>
+      <Route path={["/login", "/"]} exact>
+        <Login
+          isLogin={isLogin}
+          setIsLogin={setIsLogin}
+        />
+      </Route>
       {/* ) : (<Redirect to='/book' />)} */}
       {isLogin ? (
         <>
@@ -68,7 +68,8 @@ function App() {
                   openSider={openSider}
                   updateOpenSider={updateOpenSider}
                 />
-                <Dashboard />
+                <Dashboard
+                  openSider={openSider} />
               </div>
             </div>
           </Route>

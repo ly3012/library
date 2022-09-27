@@ -12,7 +12,7 @@ import { NavLink } from 'react-router-dom';
 const Sider = (props) => {
 
    const openSider = props.openSider;
-   
+
 
    return (
 
@@ -32,11 +32,11 @@ const Sider = (props) => {
             </div>
             <div className="flex gap-x-4 items-center border-b-yellow-900 border-b-2 pb-3 ">
                {/* <NavLink activeClassName="active" > */}
-                  <img alt="no-avatar"
-                     src={avatar}
-                     className={`cursor-pointer rounded-full h-20 duration-500 ${!openSider && "rotate-[360deg] h-10"
-                        }`}
-                  />
+               <img alt="no-avatar"
+                  src={avatar}
+                  className={`cursor-pointer rounded-full h-20 duration-500 ${!openSider && " h-10"
+                     }`}
+               />
 
                {/* </NavLink> */}
                {/* <h1>Designer</h1> */}

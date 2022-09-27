@@ -24,24 +24,23 @@ const Reader = (props) => {
             })
     }
 
-    const init = () => {
+    const getDataReader = () => {
         readerService.getReader()
             .then(response => {
-                setDataRender(response.data); 
-                console.log("data reader:", dataRender);
+                setDataRender(response.data);
             })
             .catch(error => {
                 console.log('Something went wrong', error);
             })
     }
     useEffect(() => {
-        init();
+        getDataReader();
     }, []);
 
     const handleDelete = (id) => {
         readerService.deleteReader(id)
             .then(response => {
-                init();
+                getDataReader();
 
             })
             .catch(error => {
@@ -49,10 +48,23 @@ const Reader = (props) => {
             })
     }
 
+    const saveReader = (data) => {
+        readerService.createReader(data)
+        readerService.getReader()
+            .then(response => {
+                setDataRender(response.data);
+            })
+            .catch(error => {
+                console.log('something went wrong', error);
+            })
+
+
+    }
+
     return (
         <div className={`${props.openSider ? "ml-72" : "ml-20 "} h-screen flex-1 p-7  `}>
             <div className='headContent flex flex-row justify-between'>
-                <AddReader />
+                <AddReader saveReader={saveReader} />
                 <SearchComponent handleChangeFilter={handleChangeFilter} />
 
             </div>
@@ -89,13 +101,14 @@ const Reader = (props) => {
                                         id={item.idReader} />
 
                                     <button
-                                        className= {`text-white active:bg-red-600 
+                                        className={`text-white active:bg-red-600 
                                         text-sm py-1 px-3 m-1 rounded shadow hover:shadow-lg outline-none 
                                         focus:outline-none  ease-linear transition-all duration-150
                                         inline-flex items-center bg-red-500  hover:bg-red-600 
                                         border-b-4 border-red-700 hover:border-red-500  min-w-fit`}
-                                        onClick={() => {if(window.confirm('Delete the item?'))
-                                            handleDelete(item.idReader);
+                                        onClick={() => {
+                                            if (window.confirm('Delete the item?'))
+                                                handleDelete(item.idReader);
                                         }}
                                     >
                                         Delete
