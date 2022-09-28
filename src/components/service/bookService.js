@@ -5,7 +5,7 @@ let token = localStorage.getItem("token")
 let Authorization = `Bearer ${token}`
 
 
-const getBook = () => {
+const getBook = async () => {
     var config = {
         method: 'get',
         url: BOOK_API_BASE_URL,
@@ -13,7 +13,8 @@ const getBook = () => {
             'Authorization': Authorization,
         }
     };
-    return axios(config);
+    const response = await axios(config);
+    return response
 }
 
 const createBook = (book) => {

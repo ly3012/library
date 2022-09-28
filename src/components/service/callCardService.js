@@ -64,7 +64,7 @@ const deleteCallCard = (callCardID) => {
     return axios(config);
 }
 
-const findCallCardByCriteria = (criteria) => {
+const findByCriteria = (criteria) => {
     var config = {
         method: 'get',
         url: `${CARD_API_BASE_URL}/search?query=${criteria}`,
@@ -89,4 +89,4 @@ const setStatus = (callCardID) => {
 
 }
 
-export default { getCallCard, getCallCardById, createCallCard, deleteCallCard, updateCallCard, findCallCardByCriteria, setStatus }
+export default { getCallCard, getCallCardById, createCallCard, deleteCallCard, updateCallCard, findByCriteria, setStatus }

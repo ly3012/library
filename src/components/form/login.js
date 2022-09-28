@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 
 const Login = (props) => {
+  document.title = "Login";
 
   let history = useHistory();
 
@@ -38,12 +39,12 @@ const Login = (props) => {
     axios(config)
       .then(function (response) {
         if (response.status === 200) {
-          localStorage.setItem("token",response.data.token);
-          localStorage.setItem("user_name",response.data.user.name);
-          localStorage.setItem("user_userName",response.data.user.username);
+          localStorage.setItem("token", response.data.token);
+          localStorage.setItem("user_name", response.data.user.name);
+          localStorage.setItem("user_userName", response.data.user.username);
           props.setIsLogin(true);
 
-          history.replace({ pathname: '/book' })
+          history.replace({ pathname: '/dashboard' })
           return response.data.JSON;
         }
         throw Error("Sai tên đăng nhập hoặc mật khẩu")

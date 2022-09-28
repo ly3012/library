@@ -52,6 +52,7 @@ function App() {
     <Router>
       {/* {!isLogin ? ( */}
       <Route path={["/login", "/"]} exact>
+        <title>ContactUs</title>
         <Login
           isLogin={isLogin}
           setIsLogin={setIsLogin}

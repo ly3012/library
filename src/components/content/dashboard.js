@@ -9,25 +9,27 @@ import readerService from '../service/readerService';
 
 
 const Dashboard = (props) => {
+    document.title = "Dashboard book";
     const [dataBook, setDataBook] = useState([]);
     const [dataReader, setDataReader] = useState([]);
     const [callCard, setCallCard] = useState([]);
     const [user, setUser] = useState([]);
-    const getDataBook = () => {
-        bookService.getBook()
-            .then(response => {
-                setDataBook(response.data);
-            })
-            .catch(error => {
-                console.log('Something went wrong', error);
-            })
-    }
+
     useEffect(() => {
+        const getDataBook = async () => {
+            await bookService.getBook()
+                .then(response => {
+                    setDataBook(response.data);
+                })
+                .catch(error => {
+                    console.log('Something went wrong', error);
+                })
+        }
         getDataBook();
     }, []);
 
-    const getDataReader = () => {
-        readerService.getReader()
+    const getDataReader = async () => {
+        await readerService.getReader()
             .then(response => {
                 setDataReader(response.data);
             })
@@ -39,8 +41,8 @@ const Dashboard = (props) => {
         getDataReader();
     }, []);
 
-    const getDataCallCard = () => {
-        callCardService.getCallCard()
+    const getDataCallCard = async () => {
+        await callCardService.getCallCard()
             .then(response => {
                 setCallCard(response.data);
             })
@@ -81,7 +83,7 @@ const Dashboard = (props) => {
                         {dataBook.length}
                     </div>
                     <Link
-                        className='text-gray-400 btn border rounded-md border-gray-500 bg-green-900 hover:bg-green-700 shadow-sm p-1 px-16 w-full'
+                        className='text-gray-400 btn border rounded-md border-gray-500 bg-green-900 hover:bg-green-700 shadow-sm p-1 px-14 w-full'
                         to={'/book'}
                     >
                         Chi tiết
@@ -95,7 +97,7 @@ const Dashboard = (props) => {
                         {dataReader.length}
                     </div>
                     <Link
-                        className='text-gray-400 btn border rounded-md border-gray-500 bg-yellow-900 hover:bg-yellow-700 shadow-sm p-1 px-16 w-full'
+                        className='text-gray-400 btn border rounded-md border-gray-500 bg-yellow-900 hover:bg-yellow-700 shadow-sm p-1 px-14 w-full'
                         to={'/reader'}
                     >
                         Chi tiết
@@ -109,7 +111,7 @@ const Dashboard = (props) => {
                         {callCard.length}
                     </div>
                     <Link
-                        className='text-gray-400 btn border rounded-md border-gray-500 bg-blue-900 hover:bg-blue-700 shadow-sm p-1 px-16 w-full'
+                        className='text-gray-400 btn border rounded-md border-gray-500 bg-blue-900 hover:bg-blue-700 shadow-sm p-1 px-14 w-full'
                         to={'/callCard'}
                     >
                         Chi tiết
@@ -118,12 +120,12 @@ const Dashboard = (props) => {
                 <div
                     className='block p-6 max-w-sm  rounded-lg border border-gray-200 shadow-md dark:bg-gray-900 dark:border-gray-500'
                 >
-                    <h5 className="mb-2 text-2xl font-bold text-gray-300">Số thủ thư</h5>
+                    <h5 className="mb-2 text-2xl font-bold text-gray-300">Số người dùng</h5>
                     <div className="text-5xl font-bold text-gray-200 p-6 mb-4">
                         {user.length}
                     </div>
                     <Link
-                        className='text-gray-400 btn border rounded-md border-gray-500 bg-gray-900 hover:bg-gray-700 shadow-sm p-1 px-16 w-full'
+                        className='text-gray-400 btn border rounded-md border-gray-500 bg-gray-900 hover:bg-gray-700 shadow-sm p-1 px-14 w-full'
                         to={'/admin'}
                     >
                         Chi tiết

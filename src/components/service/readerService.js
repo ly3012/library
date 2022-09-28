@@ -5,7 +5,7 @@ let token = localStorage.getItem("token")
 let Authorization = `Bearer ${token}`
 
 
-const getReader = () => {
+const getReader = async () => {
     var config = {
         method: 'get',
         url: READER_API_BASE_URL,
@@ -13,7 +13,8 @@ const getReader = () => {
             'Authorization': Authorization,
         }
     };
-    return axios(config);
+    const response = await axios(config);
+    return response
 }
 
 const createReader = (reader) => {
@@ -64,7 +65,10 @@ const deleteReader = (readerID) => {
     return axios(config);
 }
 
-const findReaderByCriteria = (criteria) => {
+
+
+
+const findByCriteria = async (criteria) => {
     var config = {
         method: 'get',
         url: `${READER_API_BASE_URL}/search?query=${criteria}`,
@@ -72,9 +76,10 @@ const findReaderByCriteria = (criteria) => {
             'Authorization': Authorization,
         }
     };
-    return axios(config);
+    const response = await axios(config);
+    return response
 }
 
 
 
-export default { getReader, getReaderById, createReader, deleteReader, updateReader, findReaderByCriteria }
+export default { getReader, getReaderById, createReader, deleteReader, updateReader, findByCriteria }

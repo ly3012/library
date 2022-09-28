@@ -9,11 +9,12 @@ import { useHistory } from 'react-router-dom';
 
 
 const BookList = (props) => {
+    document.title = "BookList";
 
-    let history = useHistory();
-
-    const [keyWord, setKeyWord] = useState('');
+    // let history = useHistory();
+    // const [keyWord, setKeyWord] = useState('');
     const [dataRender, setDataRender] = useState([]);
+
 
     const handleChangeFilter = (newFilter, event) => {
         event.preventDefault();
@@ -56,10 +57,6 @@ const BookList = (props) => {
 
         bookService.updateBook(data)
             .then(response => {
-                // const newDataRender = [...dataRender];
-                // const index = dataRender.findIndex(x => x.id === data.id);
-                // console.log(index);
-                // newDataRender[index] = data;
                 bookService.getBook()
                     .then(res => {
                         setDataRender(res.data);
@@ -89,11 +86,12 @@ const BookList = (props) => {
     return (
         <div className={`${props.openSider ? "ml-72" : "ml-20 "} content flex-1 p-7  "`}>
             <div className='headContent flex flex-row justify-between mb-7'>
-                <AddBook saveBook={saveBook}
+                <AddBook
+                    saveBook={saveBook}
                 />
                 <SearchComponent
-                    keyWord={keyWord}
-                    setKeyWord={setKeyWord}
+                    // keyWord={keyWord}
+                    // setKeyWord={setKeyWord}
                     handleChangeFilter={handleChangeFilter} />
             </div>
 
@@ -102,11 +100,11 @@ const BookList = (props) => {
                     <tr>
                         {/* <th>Stt</th> */}
                         <th>Mã sách </th>
-                        <th>Name</th>
-                        <th>Author</th>
-                        <th>PageNumber</th>
-                        <th>Release</th>
-                        <th>Amount</th>
+                        <th>Tên sách</th>
+                        <th>Tác giả</th>
+                        <th>Số trang</th>
+                        <th>Năm xuất bản</th>
+                        <th>Số lượng</th>
                         <th>Update At</th>
                         <th></th>
                     </tr>

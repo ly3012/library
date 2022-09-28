@@ -7,10 +7,9 @@ import EditReader from '../form/editReader';
 import moment from 'moment';
 
 const Reader = (props) => {
+    document.title = "Management Reader";
 
-    // const [dataRender, setDataRender] = useState([]);
     const [dataRender, setDataRender] = useState([]);
-
 
     const handleChangeFilter = (newFilter, event) => {
         event.preventDefault();
@@ -61,10 +60,27 @@ const Reader = (props) => {
 
     }
 
+    const editReader = (reader) => {
+        console.log("reader", reader);
+        readerService.updateReader(reader)
+            .then(response => {
+                readerService.getReader()
+                    .then(res => {
+                        setDataRender(res.data);
+                    })
+            })
+            .catch(error => {
+                console.log('something went wroing', error);
+            })
+    }
+
+
     return (
-        <div className={`${props.openSider ? "ml-72" : "ml-20 "} h-screen flex-1 p-7  `}>
-            <div className='headContent flex flex-row justify-between'>
-                <AddReader saveReader={saveReader} />
+        <div className={`${props.openSider ? "ml-72" : "ml-20 "} content flex-1 p-7  "`}>
+            <div className='headContent flex flex-row justify-between mb-7'>
+                <AddReader
+                    saveReader={saveReader}
+                />
                 <SearchComponent handleChangeFilter={handleChangeFilter} />
 
             </div>
@@ -72,10 +88,10 @@ const Reader = (props) => {
             <table className='mt-3'>
                 <thead>
                     <tr>
-                        <th>Id</th>
-                        <th>Name</th>
-                        <th>Add</th>
-                        <th>PhoneNumber</th>
+                        <th>Mã</th>
+                        <th>Tên</th>
+                        <th>Địa chỉ</th>
+                        <th>Số điện thoại</th>
                         <th>Email</th>
                         {/* <th>Status</th> */}
                         <th>Update At</th>
@@ -98,7 +114,9 @@ const Reader = (props) => {
 
                                 <td>
                                     <EditReader
-                                        id={item.idReader} />
+                                        id={item.idReader}
+                                        editReader={editReader}
+                                    />
 
                                     <button
                                         className={`text-white active:bg-red-600 

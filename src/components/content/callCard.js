@@ -7,6 +7,7 @@ import moment from 'moment';
 import SetStatus from '../form/editCallCard';
 
 const CallCard = (props) => {
+    document.title = "Management CallCard";
 
     const [dataRender, setDataRender] = useState([]);
     //  const [state, setstate] = useState(false);
@@ -37,7 +38,6 @@ const CallCard = (props) => {
         init();
     }, []);
 
-    console.log("dataRender", dataRender);
     const handleDelete = (id) => {
         callCardService.deleteCallCard(id)
             .then(response => {
@@ -50,8 +50,8 @@ const CallCard = (props) => {
     }
 
     return (
-        <div className={`${props.openSider ? "ml-72" : "ml-20 "} h-screen flex-1 p-7  `}>
-            <div className='headContent flex flex-row justify-between'>
+        <div className={`${props.openSider ? "ml-72" : "ml-20 "} content flex-1 p-7  "`}>
+            <div className='headContent flex flex-row justify-between mb-7'>
                 <AddCallCard />
                 <SearchComponent handleChangeFilter={handleChangeFilter} />
 
@@ -90,15 +90,16 @@ const CallCard = (props) => {
                                 }}
                                 </td> */}
                                 <td>{item.books.reduce((prev, item, index) => {
-                                    return(` ${prev} ${(index + 1)}. ${item.name}
-                                    \r\n`)}, "")
+                                    return (` ${prev} ${(index + 1)}. ${item.name}
+                                    \r\n`)
+                                }, "")
                                     // return (
-                                        // <li> { prev + (index + 1) + ". " + item.name}</li>)
-                                        // <span>
-                                        //     { prev + (index + 1) + ". " + item.name}
-                                        //     <br/>
-                                        // </span>)
-                                // }, "")
+                                    // <li> { prev + (index + 1) + ". " + item.name}</li>)
+                                    // <span>
+                                    //     { prev + (index + 1) + ". " + item.name}
+                                    //     <br/>
+                                    // </span>)
+                                    // }, "")
                                 }
                                 </td>
 

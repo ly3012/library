@@ -8,7 +8,8 @@ import moment from 'moment';
 
 
 const Admin = (props) => {
-    
+    document.title = "Management User";
+
     const [dataUser, setDataUser] = useState([]);
     const [dataRender, setDataRender] = useState([]);
 
@@ -54,7 +55,7 @@ const Admin = (props) => {
     return (
         <div className={`${props.openSider ? "ml-72" : "ml-20 "} content flex-1 p-7  "`}>
             <div className='headContent flex flex-row justify-between mb-7'>
-                <AddUser/>
+                <AddUser />
                 <SearchComponent handleChangeFilter={handleChangeFilter} />
             </div>
 
@@ -72,18 +73,18 @@ const Admin = (props) => {
                     </tr>
                 </thead>
                 <tbody>
-                    {dataRender.length>0 && dataRender.map((item,index) => {
-                        var role ="";
+                    {dataRender.length > 0 && dataRender.map((item, index) => {
+                        var role = "";
                         item.roles.forEach(element => {
-                            if(element.name === "ROLE_USER") role += `USER `;
-                            if(element.name === "ROLE_ADMIN") role += `ADMIN `;
+                            if (element.name === "ROLE_USER") role += `USER `;
+                            if (element.name === "ROLE_ADMIN") role += `ADMIN `;
                             // role += `${element.name} `;
                         });
-                       
-                        
+
+
                         return (
                             < tr key={item.id}>
-                                <td>{index+1}</td>
+                                <td>{index + 1}</td>
                                 {/* <td>{item.id}</td> */}
                                 <td>{item.name}</td>
                                 <td>{item.email}</td>
@@ -92,8 +93,8 @@ const Admin = (props) => {
                                 <td>{role}</td>
                                 <td>{moment(item.updatedAt).format("DD/MM/YYYY, hh:mm:ss")}</td>
                                 <td>
-                                    <EditBook
-                                        id={item.id} />
+                                    {/* <EditBook
+                                        id={item.id} /> */}
 
                                     <button
                                         className={`text-white active:bg-red-600 
@@ -115,7 +116,7 @@ const Admin = (props) => {
                         )
                     })}
 
-                    {dataRender.length===0 &&
+                    {dataRender.length === 0 &&
                         <tr>
                             <td colSpan={'8'} className='text-center'>NotResult...</td>
                         </tr>

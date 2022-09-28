@@ -4,6 +4,7 @@ import readerService from '../service/readerService';
 import { useHistory } from 'react-router-dom';
 
 const EditReader = (props) => {
+  const editReader = props.editReader;
   let history = useHistory();
   const [showModal, setShowModal] = React.useState(false);
   const [showAlert, setShowAlert] = React.useState(false);
@@ -24,19 +25,19 @@ const EditReader = (props) => {
     setReader(newData);
   }
 
-  const saveReader = (event) => {
-    readerService.updateReader(reader)
-      .then(response => {
-        setShowAlert(true);
-        // setReader([])
-        history.go(0)
-      })
-      .catch(error => {
-        console.log('something went wroing', error);
-      })
+  const handleSubmit = () => {
+    // console.log("reader", reader);
+    setShowAlert(true);
+    setTimeout(() => {
+      setShowModal(false);
+    }, 1000);
+    setTimeout(() => {
+      setShowAlert(false);
+    }, 1600);
 
-
+    editReader(reader);
   }
+
 
 
   return (
@@ -55,7 +56,7 @@ const EditReader = (props) => {
           setShowModal(true),
           readerService.getReaderById(props.id)
             .then(response => {
-              console.log('Printing reader data', response.data);
+              // console.log('Printing reader data', response.data);
               setReader(response.data);
             })
             .catch(error => {
@@ -89,7 +90,7 @@ const EditReader = (props) => {
                 </div>
                 {/*body*/}
                 <div className="relative p-6 flex-auto">
-                  <form className=' p-5' onSubmit={(event) => saveReader(event)}>
+                  <form className=' p-5' onSubmit={() => handleSubmit()}>
                     <div>
                       <div className="mb-6 flex flex-row sm:flex-wrap md:flex-wrap">
                         <label htmlFor="fullName" className="min-w-10 text-left  ml-0 pr-2 py-1 justify-self-start">Id bạn đọc:</label>
@@ -159,26 +160,26 @@ const EditReader = (props) => {
                   <button
                     className="bg-emerald-600 text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                     type="submit"
-                    onClick={() => saveReader()}
+                    onClick={() => handleSubmit()}
 
                   >
                     Save Changes
                   </button>
                   {showAlert ? (
                     <div
-                      class="bg-green-100 rounded-lg py-5 px-6 mb-4 text-base text-green-700 fixed top-0 bottom-2/3 left-1/3 right-1/3 "
+                      className="bg-green-100 rounded-lg py-5 px-6 mb-4 text-base text-green-700 fixed top-0 bottom-2/3 left-1/3 right-1/3 "
                       role="alert"
                     >
-                      <h4 class="text-2xl font-medium leading-tight mb-2">Well done!</h4>
-                      <p class="mb-4">
+                      <h4 className="text-2xl font-medium leading-tight mb-2">Well done!</h4>
+                      <p className="mb-4">
 
                       </p>
-                      <hr class="border-green-600 opacity-30" />
-                      <p class="mt-4 mb-0">Sửa thành công
+                      <hr className="border-green-600 opacity-30" />
+                      <p className="mt-4 mb-0">Sửa thành công
                       </p>
                       <button
                         to="/reader"
-                        class="font-bold btn border-spacing-2 bg-green-700
+                        className="font-bold btn border-spacing-2 bg-green-700
                         text-white active:bg-green-800 
                         text-sm py-2 px-4 m-1 rounded shadow hover:shadow-lg outline-none 
                         focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150

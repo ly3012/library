@@ -49,10 +49,8 @@ const AddCallCard = () => {
             idUser: input.idAdmin,
             idbooks: selectedOptions.map(item => item.id)
         };
-        console.log("callCard",JSON.stringify(callCard));
         callCardService.createCallCard(callCard)
             .then(response => {
-                // console.log("employee added successfully", response.data);
                 setShowAlert(true);
                 history.go(0)
                 // history.replace({pathname: "/callCard"})
@@ -81,12 +79,9 @@ const AddCallCard = () => {
         label: item.idBook + ". " + item.name
     }
     ))
-    console.log(books);
     const handleSelectOptions = (event) => {
-        console.log("event", event);
 
         setSelectedOptions(event);
-        console.log("selectedOptions", selectedOptions);
     }
 
     return (
@@ -127,7 +122,7 @@ const AddCallCard = () => {
                                 {/*body*/}
                                 <div className="relative p-6 flex-auto">
                                     <form className=' p-5'
-                                        // onSubmit={(event) => saveCallCard(event)}
+                                    // onSubmit={(event) => saveCallCard(event)}
                                     >
                                         <div>
                                             <div className="mb-6 flex flex-row sm:flex-wrap md:flex-wrap">
@@ -150,27 +145,7 @@ const AddCallCard = () => {
                                                     className="md:min-w-20 flex-1 py-1 bg-gray-50 border border-gray-300" required=""
                                                 />
                                             </div>
-                                            {/* <div className="mb-6 flex flex-row sm:flex-wrap md:flex-wrap">
 
-                                                <label htmlFor="dueDate" className="min-w-10 text-left  ml-0 pr-2 py-1 justify-self-start">Ngày hẹn trả: </label>
-                                                <input
-                                                    type="date"
-                                                    id="dueDate"
-                                                    value={input.dueDate}
-                                                    onChange={(event) => handleEventOnChange(event)}
-                                                    className="md:min-w-20 flex-1 py-1 bg-gray-50 border border-gray-300" required=""
-                                                />
-                                            </div> */}
-                                            {/* <div className="mb-6 flex flex-row sm:flex-wrap md:flex-wrap">
-                                                <label htmlFor="idBook" className="min-w-10 text-left  ml-0 pr-2 py-1 justify-self-start">Mã sách:</label>
-                                                <textarea
-                                                    // type="textarea"
-                                                    id="books"
-                                                    value={input.books}
-                                                    onChange={(event) => handleEventOnChange(event)}
-                                                    className="md:min-w-20 flex-1 py-1 bg-gray-50 border border-gray-300" required=""
-                                                />
-                                            </div> */}
                                             <div className="mb-6 flex flex-row sm:flex-wrap md:flex-wrap">
                                                 <label htmlFor="idBook" className="min-w-10 text-left  ml-0 pr-2 py-1 justify-self-start">Mã sách:</label>
                                                 <Select
@@ -217,7 +192,7 @@ const AddCallCard = () => {
                                             </p>
                                             <hr class="border-green-600 opacity-30" />
                                             <p class="mt-4 mb-0">
-                                               Thêm phiếu mượn thành công
+                                                Thêm phiếu mượn thành công
                                             </p>
                                             <button
                                                 to="/callCard"

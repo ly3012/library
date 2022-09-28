@@ -30,11 +30,12 @@ const EditBook = (props) => {
   const handleSubmit = () => {
     setShowAlert(true);
     setTimeout(() => {
-      setShowAlert(false);
-    }, 2000);
-    setTimeout(() => {
       setShowModal(false);
-    }, 1200);
+    }, 1000);
+    setTimeout(() => {
+      setShowAlert(false);
+    }, 1600);
+
     updateBook(book);
   }
 
