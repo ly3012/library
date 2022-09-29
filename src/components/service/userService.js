@@ -5,7 +5,7 @@ let token = localStorage.getItem("token")
 let Authorization = `Bearer ${token}`
 
 
-const getUser = () => {
+const getUser = async () => {
     var config = {
         method: 'get',
         url: ADMIN_API_BASE_URL,
@@ -13,10 +13,11 @@ const getUser = () => {
             'Authorization': Authorization,
         }
     };
-    return axios(config);
+    const response = await axios(config);
+    return response
 }
 
-const createUser = (user) => {
+const createUser = async (user) => {
     var config = {
         method: 'post',
         url: 'http://localhost:8080/api/auth/createUser',
@@ -26,10 +27,11 @@ const createUser = (user) => {
         },
         data: user
     };
-    return axios(config)
+    const response = await axios(config);
+    return response
 }
 
-const getUserById = (userID) => {
+const getUserById = async (userID) => {
     var config = {
         method: 'get',
         url: `${ADMIN_API_BASE_URL}/${userID}`,
@@ -37,10 +39,11 @@ const getUserById = (userID) => {
             'Authorization': Authorization,
         }
     };
-    return axios(config);
+    const response = await axios(config);
+    return response
 }
 
-const updateUser = (user) => {
+const updateUser = async (user) => {
     var config = {
         method: 'put',
         url: ADMIN_API_BASE_URL,
@@ -50,10 +53,11 @@ const updateUser = (user) => {
         },
         data: user
     };
-    return axios(config)
+    const response = await axios(config);
+    return response
 }
 
-const deleteUser = (userID) => {
+const deleteUser = async (userID) => {
     var config = {
         method: 'delete',
         url: `${ADMIN_API_BASE_URL}/${userID}`,
@@ -61,10 +65,11 @@ const deleteUser = (userID) => {
             'Authorization': Authorization,
         }
     };
-    return axios(config);
+    const response = await axios(config);
+    return response
 }
 
-const findUserByCriteria = (criteria) => {
+const findUserByCriteria = async (criteria) => {
     var config = {
         method: 'get',
         url: `${ADMIN_API_BASE_URL}/search?query=${criteria}`,
@@ -72,7 +77,8 @@ const findUserByCriteria = (criteria) => {
             'Authorization': Authorization,
         }
     };
-    return axios(config);
+    const response = await axios(config);
+    return response
 }
 
 export default { getUser, getUserById, createUser, deleteUser, updateUser, findUserByCriteria }

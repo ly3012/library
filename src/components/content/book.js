@@ -43,10 +43,12 @@ const BookList = (props) => {
     }, []);
 
     const saveBook = (data) => {
-        bookService.createBook(data);
-        bookService.getBook()
+        bookService.createBook(data)
             .then(response => {
-                setDataRender(response.data);
+                bookService.getBook()
+                    .then(res => {
+                        setDataRender(res.data);
+                    })
             })
             .catch(error => {
                 console.log('something went wroing', error);

@@ -27,6 +27,12 @@ const AddReader = (props) => {
   const handleSubmit = () => {
     setShowAlert(true);
     saveReader(reader);
+    setTimeout(() => {
+      setShowAlert(false);
+    }, 2000);
+    setTimeout(() => {
+      setShowModal(false);
+    }, 1200);
     setReader({});
   }
 

@@ -78,30 +78,31 @@ const CallCard = (props) => {
                                 <td>{item.user.id + ". "}{item.user.name}</td>
 
                                 <td>{item.reader.idReader + ". "} {item.reader.fullName}</td>
-                                {/*                                 
-                                <td>{item.books.map=(book)=>{
-                                    return (
-                                        <span>
-                                            {book.name}
-                                            <br/>
-                                            </span>
-                                    )
 
-                                }}
-                                </td> */}
-                                <td>{item.books.reduce((prev, item, index) => {
-                                    return (` ${prev} ${(index + 1)}. ${item.name}
-                                    \r\n`)
-                                }, "")
-                                    // return (
-                                    // <li> { prev + (index + 1) + ". " + item.name}</li>)
-                                    // <span>
-                                    //     { prev + (index + 1) + ". " + item.name}
-                                    //     <br/>
-                                    // </span>)
-                                    // }, "")
-                                }
+                                <td>
+
+                                    {item.books.map((book, index) => (
+                                        <li
+                                            key={index}
+                                            className="list-decimal"
+                                        >{book.name}</li>
+                                    ))}
+                                    {/* {item.books.map = (book) => {
+                                        return (
+                                            <div>
+                                                {book.name}
+                                                <br />
+                                            </div>
+                                        )
+
+                                    }} */}
+
                                 </td>
+                                {/* <td>{item.books.reduce((prev, item, index) => {
+                                    return (` ${prev} ${(index + 1)}. ${item.name} ` + "\n")
+                                }, "")
+                                }
+                                </td> */}
 
 
                                 <td>{item.status ? "Đã trả" : "Chưa trả"}</td>

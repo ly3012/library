@@ -35,30 +35,16 @@ function App() {
 
 
   return (
-    // <Router>
-    //   <Switch>
-    //     <div className="App">
-    //       <Route path={["/login","/"]} exact>
-    //       {/* <Route path={["/login"]} exact> */}
-    //         <Logintest />
-    //       </Route>
-    //       <Route path={["/home", "/book", "/reader", "/admin","/dashboard" ]} exact>
-    //       {/* <Route path={["/"]} exact> */}
-    //         <SidebarLayout/>
-    //       </Route>
-    //     </div>
-    //   </Switch>
-    // </Router>
     <Router>
-      {/* {!isLogin ? ( */}
-      <Route path={["/login", "/"]} exact>
-        <title>ContactUs</title>
-        <Login
-          isLogin={isLogin}
-          setIsLogin={setIsLogin}
-        />
-      </Route>
-      {/* ) : (<Redirect to='/book' />)} */}
+      {!isLogin ? (
+        <Route path={["/login", "/"]} exact>
+          <title>ContactUs</title>
+          <Login
+            isLogin={isLogin}
+            setIsLogin={setIsLogin}
+          />
+        </Route>
+      ) : (<Redirect to='/dashboard' />)}
       {isLogin ? (
         <>
           <Route path="/dashboard" exact >

@@ -49,12 +49,14 @@ const Reader = (props) => {
 
     const saveReader = (data) => {
         readerService.createReader(data)
-        readerService.getReader()
             .then(response => {
-                setDataRender(response.data);
+                readerService.getReader()
+                    .then(res => {
+                        setDataRender(res.data);
+                    })
             })
             .catch(error => {
-                console.log('something went wrong', error);
+                console.log('something went wroing', error);
             })
 
 

@@ -7,7 +7,8 @@ import { useHistory } from 'react-router-dom';
 import Multiselect from 'multiselect-react-dropdown';
 import Select from "react-select";
 
-const AddUser = () => {
+const AddUser = (props) => {
+    const saveUser = props.saveUser;
     const [showModal, setShowModal] = React.useState(false);
     const [showAlert, setShowAlert] = React.useState(false);
     const [user, setUser] = useState({
@@ -48,12 +49,9 @@ const AddUser = () => {
         setUser(newData);
     }
 
-
     const handleSelectOptions = (event) => {
-        console.log("event", event);
 
         setSelectedOptions(event);
-        console.log("selectedOptions", selectedOptions);
     }
 
 
@@ -68,22 +66,15 @@ const AddUser = () => {
         })
 
     }
-    let history = useHistory();
-    const saveUser = (event) => {
-        userService.createUser(userCreate)
-            .then(response => {
-                console.log("employee added successfully", response.data);
-                setShowAlert(true);
-                history.go("/admin")
-
-                // history.replace({pathname: "/admin"})
-            })
-            .catch(error => {
-                alert("Vui lòng điền đúng thông tin");
-                console.log('something went wroing', error);
-            })
-
-
+    const handleSubmit = () => {
+        saveUser(userCreate);
+        setShowAlert(true);
+        setTimeout(() => {
+            setShowAlert(false);
+        }, 2000);
+        setTimeout(() => {
+            setShowModal(false);
+        }, 1200);
     }
     const styles = {
         multiValue: styles => {
@@ -131,7 +122,7 @@ const AddUser = () => {
                                 </div>
                                 {/*body*/}
                                 <div className="relative p-5 px-3 flex-auto">
-                                    <form className=' p-5' onSubmit={(event) => saveUser(event)}>
+                                    <form className=' p-5' onSubmit={() => handleSubmit()}>
                                         <div>
                                             <div className="mb-6 flex flex-row sm:flex-wrap md:flex-wrap">
                                                 <label htmlFor="name" className="min-w-10 text-left  ml-0 pr-2 py-1 justify-self-start">Tên người dùng:</label>
@@ -218,26 +209,26 @@ const AddUser = () => {
                                     <button
                                         className="bg-emerald-600 text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                                         type="submit"
-                                        onClick={() => saveUser()}
+                                        onClick={() => handleSubmit()}
                                     >
                                         Save Changes
                                     </button>
                                     {showAlert ? (
                                         <div
-                                            class="bg-green-100 rounded-lg py-5 px-6 mb-4 text-base text-green-700 fixed top-0 bottom-2/3 left-1/3 right-1/3 "
+                                            className="bg-green-100 rounded-lg py-5 px-6 mb-4 text-base text-green-700 fixed top-0 bottom-2/3 left-1/3 right-1/3 "
                                             role="alert"
                                         >
-                                            <h4 class="text-2xl font-medium leading-tight mb-2">Sucess!</h4>
-                                            <p class="mb-4">
+                                            <h4 className="text-2xl font-medium leading-tight mb-2">Sucess!</h4>
+                                            <p className="mb-4">
 
                                             </p>
-                                            <hr class="border-green-600 opacity-30" />
-                                            <p class="mt-4 mb-0">
+                                            <hr className="border-green-600 opacity-30" />
+                                            <p className="mt-4 mb-0">
                                                 Thêm tài khoản thành công!
                                             </p>
                                             <button
                                                 to="/user"
-                                                class="font-bold btn border-spacing-2 bg-green-700
+                                                className="font-bold btn border-spacing-2 bg-green-700
                         text-white active:bg-green-800 
                         text-sm py-2 px-4 m-1 rounded shadow hover:shadow-lg outline-none 
                         focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150

@@ -3,14 +3,12 @@ import userService from '../service/userService';
 import React from 'react';
 import SearchComponent from '../layouts/searchComponent';
 import AddUser from '../form/addUser';
-import EditBook from '../form/editBook';
 import moment from 'moment';
 
 
 const Admin = (props) => {
     document.title = "Management User";
 
-    const [dataUser, setDataUser] = useState([]);
     const [dataRender, setDataRender] = useState([]);
 
     const handleChangeFilter = (newFilter, event) => {
@@ -28,9 +26,7 @@ const Admin = (props) => {
     const init = () => {
         userService.getUser()
             .then(response => {
-                // setDataUser(response.data);
                 setDataRender(response.data);
-                // console.log("data render",dataRender);
             })
             .catch(error => {
                 console.log('Something went wrong', error);
@@ -40,7 +36,20 @@ const Admin = (props) => {
         init();
     }, []);
 
-    //  console.log("data render",dataRender);
+    const saveUser = (user) => {
+        userService.createUser(user)
+            .then(response => {
+                userService.getUser()
+                    .then(res => {
+                        setDataRender(res.data);
+                    })
+            })
+            .catch(error => {
+                console.log('something went wroing', error);
+            })
+
+
+    }
 
     const handleDelete = (id) => {
         userService.deleteUser(id)
@@ -55,7 +64,7 @@ const Admin = (props) => {
     return (
         <div className={`${props.openSider ? "ml-72" : "ml-20 "} content flex-1 p-7  "`}>
             <div className='headContent flex flex-row justify-between mb-7'>
-                <AddUser />
+                <AddUser saveUser={saveUser} />
                 <SearchComponent handleChangeFilter={handleChangeFilter} />
             </div>
 
